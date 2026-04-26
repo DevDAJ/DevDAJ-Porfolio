@@ -1,0 +1,53 @@
+---
+import { links } from "../data/site";
+
+const year = new Date().getFullYear();
+
+const footLink =
+  "text-xs text-foreground-muted underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none";
+---
+
+<footer
+  class="mt-auto border-t border-border bg-canvas-elevated/40 py-6"
+  aria-label="Site footer"
+>
+  <div
+    class="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="text-xs text-foreground-muted">
+      © {year}
+      <span class="font-medium text-foreground/80">DevDAJ</span>. All rights
+      reserved.
+    </p>
+    <nav
+      class="flex flex-wrap gap-x-4 gap-y-1"
+      aria-label="Resume and social links"
+    >
+      <a
+        href={links.resume}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={footLink}>Resume</a
+      >
+      <a href={`mailto:${links.email}`} class={footLink}>Email</a>
+      <a
+        href={links.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={footLink}>GitHub</a
+      >
+      <a
+        href={links.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={footLink}>LinkedIn</a
+      >
+      <a
+        href={links.twitter}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={footLink}>Twitter</a
+      >
+    </nav>
+  </div>
+</footer>

@@ -1,0 +1,29 @@
+---
+title: Rebuilding my portfolio, why I left React for Astro
+date: "2026-04-25"
+excerpt: A rework of this site, and why static Astro beats a React app plus S3 markdown and a backend for a simple portfolio.
+---
+
+I recently reworked this portfolio from a **React** setup to **Astro**. The goal was not to chase a trend, it was to align the stack with what this site actually is: a few pages, some blog posts, and zero need for client-heavy interactivity.
+
+## Why Astro over React for a portfolio
+
+React shines when state, routing, and components churn together in one long-lived app. A personal site is mostly **content**: hero copy, project cards, a blog index, and individual posts. Shipping that as a client bundle, a router, and hydration for mostly static HTML never felt proportional.
+
+Astro lets me write **`.mdx` files in the repo**, get type-checked frontmatter, and render at **build time**. The browser gets HTML and a thin layer of JS only where I opt in (theme toggle, tabs). Everything else is static by default.
+
+## From “max features” to something I can actually keep up
+
+I used to think a personal site was about **how much I could bolt on**: a custom CMS mental model, clever pipelines, and features that looked impressive in a README. One version of that was a **custom React page** that acted as the “CMS”: I would write markdown in the browser, hit upload, and the app would **push the file to an S3 bucket** (keys in a database or a manifest, presigned URLs or backend signing, CORS between the app and the bucket). The public site would then **fetch and render** those objects at runtime. It worked, and it felt “real,” but it was a lot of surface area for what is still just text on a few routes.
+
+That setup meant **more to maintain** than the blog was worth: auth for the upload UI, error handling when a key was wrong, cache and invalidation when an object changed, and a deploy story for both the SPA and whatever signed uploads. Most weeks I touched **infrastructure** instead of writing or refreshing the actual pages.
+
+Now I optimize for **simplicity of maintaining and updating the site**. I would rather ship a small, boring stack I understand end to end than a showcase I dread touching when copy or a project blurb needs to change.
+
+## One static site vs an app plus a backend
+
+Hosting a **SPA + API** means at least two deployables: build the frontend, run the API somewhere, wire env vars, and keep both in sync. For a portfolio, that is almost entirely **operational tax** with little upside.
+
+A **static Astro build** is a folder of files. It goes on any host that serves HTML: GitHub Pages, Cloudflare Pages, S3 + CloudFront as a static website, whatever you like. No process to keep alive, no database connection pool, no cold starts for “get blog post by slug.” Security surface is smaller because there is almost nothing to attack at request time.
+
+I still reach for React (or similar) when the product needs it. For this site, **Astro + MDX + a single deploy** was the right trade-off: simpler to write, simpler to host, and easier to change without reaching for infrastructure first.

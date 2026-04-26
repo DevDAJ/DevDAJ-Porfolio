@@ -1,0 +1,24 @@
+---
+import type { SocialIconLinkProps as Props } from "../types/components";
+
+const { href, tooltip, ariaLabel, external = false } = Astro.props;
+---
+
+<span class="relative inline-flex">
+  <a
+    href={href}
+    class="peer relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-canvas-elevated text-foreground transition-colors duration-200 ease-out hover:border-mint/40 hover:bg-canvas focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-none"
+    aria-label={ariaLabel}
+    {...external
+      ? ({ target: "_blank", rel: "noopener noreferrer" } as const)
+      : {}}
+  >
+    <slot />
+  </a>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-full left-1/2 z-50 mb-1.5 w-max max-w-[min(16rem,calc(100vw-2rem))] -translate-x-1/2 translate-y-1 whitespace-normal rounded-lg border border-border bg-canvas-elevated px-2.5 py-1.5 text-center text-xs font-medium leading-snug text-foreground opacity-0 shadow-lg ring-1 ring-border/40 transition-[opacity,transform] duration-150 ease-out will-change-transform peer-hover:translate-y-0 peer-hover:opacity-100 peer-focus-visible:translate-y-0 peer-focus-visible:opacity-100 motion-reduce:transition-none sm:whitespace-nowrap"
+  >
+    {tooltip}
+  </span>
+</span>

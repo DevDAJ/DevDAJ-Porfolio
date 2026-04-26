@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+import type { BlogPostPageProps as Props } from "../../types/components";
+import { readingTimeMinutesFromBody } from "../../utils/readingTime";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blogs", ({ data }) => data.draft !== true);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const readingMinutes = readingTimeMinutesFromBody(post.body);
+
+function formatDate(iso: string) {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+---
+
+<Layout>
+  <article class="mx-auto max-w-3xl px-4 py-16 sm:py-20">
+    <p class="text-sm text-foreground-muted">
+      <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+      <span class="mx-2 text-border" aria-hidden="true">·</span>
+      <span>{readingMinutes} min read</span>
+    </p>
+    <h1
+      class="mt-2 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+    >
+      {post.data.title}
+    </h1>
+    <p class="mt-6 text-lg text-foreground-muted">{post.data.excerpt}</p>
+    <div class="blog-mdx mt-10 border-t border-border pt-10">
+      <Content />
+    </div>
+    <p class="mt-12 text-sm text-foreground-muted">
+      <a
+        href="/blog"
+        class="font-medium text-accent underline-offset-4 transition-colors duration-200 ease-out hover:text-accent-hover hover:underline motion-reduce:transition-none"
+        >← All posts</a
+      >
+    </p>
+  </article>
+</Layout>

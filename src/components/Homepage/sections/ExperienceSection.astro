@@ -1,0 +1,155 @@
+---
+import Image from "astro/components/Image.astro";
+import { timeline } from "../../../data/portfolio";
+import { formatTenure } from "../../../utils/tenure";
+
+const sectionHeading =
+  "text-xl font-semibold tracking-tight text-foreground sm:text-2xl";
+---
+
+<section class="w-full" aria-labelledby="experience-heading">
+  <h2 id="experience-heading" class={sectionHeading}>Experience</h2>
+  <div
+    class="mt-6 rounded-xl border border-border bg-canvas-elevated text-foreground shadow-sm dark:shadow-none"
+  >
+    <div class="p-0">
+      <div class="relative ml-10" data-timeline-rail>
+        <span
+          class="pointer-events-none absolute inset-y-0 left-0 z-0 w-px bg-border"
+          aria-hidden="true"></span>
+        <span data-timeline-glow class="timeline-rail-glow" aria-hidden="true"
+        ></span>
+        <ul class="relative z-2 m-0 list-none border-0 p-0">
+          {
+            timeline.map((entry, i) => (
+              <li class="relative ml-10 py-4">
+                <a
+                  href={entry.employerUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-timeline-avatar
+                  class="timeline-avatar absolute -left-16 top-4 z-3 flex size-12 shrink-0 overflow-hidden rounded-full border border-border bg-canvas shadow-sm"
+                >
+                  {entry.logoSrc ? (
+                    <Image
+                      width={48}
+                      height={48}
+                      class="h-full w-full object-contain"
+                      src={entry.logoSrc}
+                      alt={entry.logoAlt}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  ) : (
+                    <span class="flex h-full w-full items-center justify-center text-xs font-bold text-mint">
+                      {entry.initial}
+                    </span>
+                  )}
+                </a>
+                <div class="flex flex-1 flex-col justify-start gap-2">
+                  <a
+                    href={entry.employerUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="w-fit"
+                  >
+                    <h3 class="text-base font-semibold leading-none">
+                      {entry.employer}
+                    </h3>
+                  </a>
+                  <div class="flex flex-col gap-2">
+                    <div>
+                      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                        <p class="text-sm font-medium leading-none text-foreground-muted">
+                          {entry.subtitle},{" "}
+                          {formatTenure(entry.startLabel, entry.endLabel)}
+                        </p>
+                        <time class="whitespace-nowrap pr-8 text-xs tabular-nums text-foreground-muted">
+                          <span>{entry.startLabel}</span>
+                          <span> — </span>
+                          <span>{entry.endLabel}</span>
+                        </time>
+                      </div>
+                      {entry.bullets && entry.bullets.length > 0 && (
+                        <ul class="ml-4 mt-2 list-outside list-disc text-sm text-foreground-muted [&_strong]:font-semibold [&_strong]:text-foreground">
+                          {entry.bullets.map((b) => (
+                            <li class="pr-8" set:html={b} />
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .timeline-rail-glow {
+    pointer-events: none;
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    z-index: 0;
+    width: 2px;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent max(0%, calc(var(--glow-y) - 9%)),
+      color-mix(in oklch, var(--mint) 45%, transparent)
+        max(0%, calc(var(--glow-y) - 3%)),
+      var(--mint) var(--glow-y),
+      color-mix(in oklch, var(--mint) 45%, transparent)
+        min(100%, calc(var(--glow-y) + 3%)),
+      transparent min(100%, calc(var(--glow-y) + 9%)),
+      transparent 100%
+    );
+  }
+
+  [data-timeline-rail][data-timeline-hover] .timeline-rail-glow {
+    opacity: 0.95;
+  }
+
+  .timeline-avatar {
+    transition:
+      box-shadow 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  [data-timeline-avatar][data-y-active] {
+    border-color: color-mix(in oklch, var(--mint) 50%, var(--border));
+    box-shadow:
+      0 0 0 1px color-mix(in oklch, var(--mint) 40%, transparent),
+      0 0 16px color-mix(in oklch, var(--mint) 30%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-rail-glow {
+      opacity: 0 !important;
+      transition: none;
+    }
+
+    [data-timeline-avatar][data-y-active] {
+      border-color: var(--border);
+      box-shadow: none;
+    }
+  }
+</style>
+
+<script>
+  import { initTimelineRailGlow } from "../../../utils/initTimelineRailGlow";
+
+  function initExperienceTimeline() {
+    initTimelineRailGlow();
+  }
+
+  initExperienceTimeline();
+  document.addEventListener("astro:page-load", initExperienceTimeline);
+</script>

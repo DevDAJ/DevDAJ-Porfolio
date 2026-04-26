@@ -1,0 +1,30 @@
+---
+title: "Owlect: CodeNection 2022 and my first real team build"
+date: "2026-04-25"
+excerpt: >-
+  How I met my teammate at University Malaya, what we shipped for SDG 4, and why this hackathon project still belongs on my portfolio, even if the code wasn't perfect.
+---
+
+I met **Ahmad Fahrezi** at **Universiti Malaya** during a different hackathon. We were both competing **solo**; we got talking, and when **CodeNection 2022** came around we decided to team up instead of going it alone again.
+
+## The brief
+
+CodeNection framed a problem around **SDG 4** (quality education), and we pitched **Owlect**: a small **learning platform** idea aimed at making educational content easier to surface and use. We were students still finding our feet in development; the goal was to ship something coherent in the timebox, not a production-grade product.
+
+## Why Vue, Tailwind, Contentful, and GraphQL
+
+We wanted a **Vue.js** front end so we could iterate quickly on screens and state without overcomplicating the stack. **Tailwind CSS** kept styling consistent when we were splitting UI work and didn't want to argue over ad-hoc CSS files.
+
+**Contentful** gave us a **headless CMS**: lesson-like content could live in the CMS instead of hard-coding copy, which matched the “platform” story for judges. **GraphQL** was the natural way to query Contentful's API from the app: typed-ish shapes, one request for the fields we needed, less REST endpoint juggling for a short hackathon sprint.
+
+## How we actually collaborated
+
+We **didnt really know how to use Git for collaboration** yet: no clean branch strategy, no disciplined PR flow. So we did what many beginners do: we **shared snippets and files over Discord** and stitched things together by hand. It was fragile and I wouldn't recommend it today, but it was honest for where we were.
+
+We had invited **another teammate** (a friend of Ahmad's) who had other commitments during the event. They still helped where they could and **took the lead on presentation and pitch**, which freed us to stay heads-down on the build until judging.
+
+## Result
+
+After the judging session, we placed **third**. The project wasn't our best work on paper, but it was **good enough for two devs still learning how to ship together**, and one of my **first times building seriously alongside another developer** when most of my work before that had been **solo**. It was a **fun** weekend: messy workflow, real constraints, and a clear lesson that **collaboration** is a skill you practice, not something Git magically solves for you.
+
+I'm adding Owlect here because that experience mattered as much as the repo. If you browse the code, expect **student-era** decisions (not a reference architecture), but a fair snapshot of how we worked at the time.

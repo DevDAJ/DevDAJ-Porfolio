@@ -1,23 +1,152 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteNavbar from "../components/SiteNavbar.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+const materialSymbolsStylesheet =
+  "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=article,chevron_left,chevron_right,close,dark_mode,email,light_mode,menu,open_in_new,photo_library&display=swap";
+---
+
+<!doctype html>
+<html
+  lang="en"
+  class="m-0 min-h-screen w-full bg-canvas text-foreground antialiased"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Danial Aiman Jamil (DevDAJ)'s portfolio and blog" />
+    <meta name="keywords" content="DevDAJ, Danial Aiman Jamil, portfolio, blog, software engineer, full-stack developer, Malaysia" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Remote logos in `timeline` (Experience section `<Image>`). -->
+    <link rel="preconnect" href="https://media.licdn.com" />
+    <link rel="preconnect" href="https://kloudius.com" />
+    <link
+      rel="preload"
+      as="style"
+      href={materialSymbolsStylesheet}
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href={materialSymbolsStylesheet} />
+    </noscript>
+    <meta name="generator" content={Astro.generator} />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      href="/sitemap-index.xml"
+      title="Sitemap"
+    />
+    <title>DevDAJ | Portfolio</title>
+    <script is:inline>
+      (function () {
+        const k = "theme";
+        const t = localStorage.getItem(k);
+        const dark =
+          t === "dark" ||
+          (t !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+  </head>
+  <body class="m-0 flex min-h-screen w-full flex-col">
+    <SiteNavbar />
+    <ThemeToggle variant="floating" />
+    <div class="flex-1">
+      <slot />
+    </div>
+    <SiteFooter />
+
+    <!-- End of body: large VT client loads after document markup so slow 3G can paint sooner. -->
+    <ClientRouter />
+    <script>
+      import { prefetch } from "astro:prefetch";
+      import { idlePreloadImageHrefs } from "../data/idlePreloadImages";
+      import { idlePrefetchPaths } from "../data/site";
+
+      function closeNavDetails() {
+        document.querySelector("header details")?.removeAttribute("open");
+      }
+
+      /** Dynamic import: skip gallery chunk (~1kB+) on pages with no project cards. */
+      function loadGalleryIfNeeded() {
+        if (!document.querySelector("[data-pg-o]")) return;
+        void import("../utils/initProjectGalleryModals").then((m) =>
+          m.initProjectGalleryModals(),
+        );
+      }
+
+      function normalizePathname(pathname: string): string {
+        const p = pathname.replace(/\/+$/, "") || "/";
+        return p;
+      }
+
+      function scheduleIdle(fn: () => void): void {
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(() => fn(), { timeout: 4500 });
+        } else {
+          setTimeout(fn, 250);
+        }
+      }
+
+      function slowOrSaveData(): boolean {
+        type Conn = { saveData?: boolean; effectiveType?: string };
+        const c = (navigator as Navigator & { connection?: Conn }).connection;
+        if (!c) return false;
+        const { saveData, effectiveType } = c;
+        return Boolean(saveData || /2g/.test(effectiveType ?? ""));
+      }
+
+      const preloadedImages = new Set<string>();
+
+      function preloadImageOnce(href: string): void {
+        if (preloadedImages.has(href)) return;
+        preloadedImages.add(href);
+        const link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.href = href;
+        document.head.append(link);
+      }
+
+      /**
+       * After load / VT swap: on idle, prefetch other HTML routes and preload key images.
+       * HTML prefetch uses `prefetch()` (respects save-data / slow links). Image preloads
+       * are skipped on save-data / 2G to avoid competing with the first paint.
+       */
+      function warmNeighborAssetsAfterIdle(): void {
+        scheduleIdle(() => {
+          const here = normalizePathname(location.pathname);
+          for (const href of idlePrefetchPaths) {
+            const target = normalizePathname(href);
+            if (target === here) continue;
+            void prefetch(href);
+          }
+          if (!slowOrSaveData()) {
+            for (const src of idlePreloadImageHrefs) {
+              preloadImageOnce(src);
+            }
+          }
+        });
+      }
+
+      function onPageLoad() {
+        closeNavDetails();
+        loadGalleryIfNeeded();
+        if (document.readyState === "complete") {
+          warmNeighborAssetsAfterIdle();
+        }
+      }
+
+      document.addEventListener("astro:page-load", onPageLoad);
+      window.addEventListener("load", warmNeighborAssetsAfterIdle, { once: true });
+      onPageLoad();
+    </script>
+  </body>
+</html>

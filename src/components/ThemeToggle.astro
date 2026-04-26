@@ -1,0 +1,58 @@
+---
+import type { ThemeToggleProps as Props } from "../types/components";
+import Icons from "./Icons.astro";
+
+const { variant = "toolbar" } = Astro.props;
+const isFloating = variant === "floating";
+
+const className = [
+  "inline-flex items-center justify-center border border-border bg-canvas-elevated text-foreground shadow-sm transition-colors duration-200 ease-out hover:border-mint/40 hover:bg-canvas focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-none cursor-pointer",
+  isFloating
+    ? "fixed z-50 size-12 rounded-full shadow-lg md:hidden max-md:bottom-[max(1.25rem,env(safe-area-inset-bottom,0px))] max-md:right-[max(1.25rem,env(safe-area-inset-right,0px))]"
+    : "h-10 w-10 rounded-lg",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class={className}
+  aria-label="Toggle color theme"
+>
+  <Icons type="material" materialIcon="dark_mode" size={5} class="hidden! dark:block! shrink-0" />
+  <Icons type="material" materialIcon="light_mode" size={5} class="block! dark:hidden! shrink-0" />
+</button>
+
+<script>
+  const key = "theme";
+
+  function readTheme() {
+    const stored = localStorage.getItem(key);
+    if (stored === "light" || stored === "dark") return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  function sync() {
+    document.documentElement.classList.toggle("dark", readTheme() === "dark");
+  }
+
+  sync();
+
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof Element)) return;
+    if (!t.closest("[data-theme-toggle]")) return;
+    const next = document.documentElement.classList.contains("dark")
+      ? "light"
+      : "dark";
+    localStorage.setItem(key, next);
+    sync();
+  });
+
+  document.addEventListener("astro:after-swap", sync);
+  document.addEventListener("astro:page-load", sync);
+</script>

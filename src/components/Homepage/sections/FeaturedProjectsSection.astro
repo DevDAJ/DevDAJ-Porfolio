@@ -1,0 +1,49 @@
+---
+import ProjectCard from "../../ProjectCard.astro";
+import { projects } from "../../../data/portfolio";
+
+const featuredProjects = projects.filter((p) => p.featured);
+const firstFeaturedImageIndex = featuredProjects.findIndex((p) => p.cardImage);
+
+const sectionHeading =
+  "text-xl font-semibold tracking-tight text-foreground sm:text-2xl";
+const sectionLead = "mt-1 text-sm text-foreground-muted";
+---
+
+<section class="w-full" aria-labelledby="featured-projects-heading">
+  <div
+    class="rounded-xl border border-border bg-canvas-elevated p-6 text-foreground shadow-sm dark:shadow-none"
+  >
+    <div
+      class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
+    >
+      <div>
+        <h2 id="featured-projects-heading" class={sectionHeading}>
+          Featured projects
+        </h2>
+        <p class={sectionLead}>
+          A few highlights; more on the projects page.
+        </p>
+      </div>
+      <a
+        href="/projects"
+        class="inline-flex shrink-0 items-center justify-center rounded-lg bg-mint px-4 py-2 text-sm font-medium text-mint-foreground shadow-sm transition-colors duration-200 ease-out hover:bg-mint-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
+      >
+        View all projects
+      </a>
+    </div>
+    <ul class="mt-6 flex list-none flex-col gap-4 p-0">
+      {
+        featuredProjects.map((p, i) => (
+          <li class="min-w-0">
+            <ProjectCard
+              project={p}
+              heading="h3"
+              cardImagePriority={i === firstFeaturedImageIndex}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

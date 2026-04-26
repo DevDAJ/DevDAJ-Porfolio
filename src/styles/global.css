@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Mint-forward surfaces + violet accent (complements mint on the hue wheel). */
+:root {
+  color-scheme: light;
+  /* Slightly lower canvas L + brighter elevated + darker text/border for clearer light-mode separation. */
+  --canvas: oklch(0.978 0.014 168);
+  --canvas-elevated: oklch(0.998 0.012 168);
+  --foreground: oklch(0.22 0.046 168);
+  --foreground-muted: oklch(0.4 0.04 168);
+  --mint: oklch(0.56 0.13 169);
+  --mint-hover: oklch(0.5 0.12 169);
+  --mint-foreground: oklch(0.99 0.01 169);
+  --accent: oklch(0.48 0.19 285);
+  --accent-hover: oklch(0.42 0.18 285);
+  --accent-foreground: oklch(0.99 0.01 285);
+  --border: oklch(0.84 0.038 168);
+  --ring: oklch(0.56 0.13 169 / 0.45);
+}
+
+html.dark {
+  color-scheme: dark;
+  --canvas: oklch(0.17 0.028 172);
+  --canvas-elevated: oklch(0.22 0.032 172);
+  --foreground: oklch(0.93 0.02 172);
+  --foreground-muted: oklch(0.72 0.03 172);
+  --mint: oklch(0.72 0.14 169);
+  --mint-hover: oklch(0.78 0.13 169);
+  --mint-foreground: oklch(0.18 0.04 169);
+  --accent: oklch(0.72 0.16 285);
+  --accent-hover: oklch(0.78 0.14 285);
+  --accent-foreground: oklch(0.16 0.04 285);
+  --border: oklch(0.32 0.04 172);
+  --ring: oklch(0.72 0.14 169 / 0.45);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-canvas-elevated: var(--canvas-elevated);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-mint: var(--mint);
+  --color-mint-hover: var(--mint-hover);
+  --color-mint-foreground: var(--mint-foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+/* Viewport scrollbar — uses theme tokens (light/dark follow html.dark). */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklch, var(--mint) 55%, var(--border))
+    var(--canvas-elevated);
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--canvas-elevated);
+  border-radius: 9999px;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--mint) 55%, var(--border));
+  border-radius: 9999px;
+  border: 2px solid var(--canvas-elevated);
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklch, var(--mint) 80%, var(--border));
+  border: 2px solid var(--canvas-elevated);
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-corner {
+  background: var(--canvas-elevated);
+}
+
+/* MDX post body (wrapped in .blog-mdx on blog detail pages). */
+.blog-mdx h2 {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.blog-mdx p {
+  margin-top: 1rem;
+  line-height: 1.7;
+  color: var(--foreground-muted);
+}
+
+.blog-mdx ul {
+  margin-top: 0.75rem;
+  margin-left: 1.25rem;
+  list-style: disc;
+  color: var(--foreground-muted);
+}
+
+.blog-mdx li {
+  margin-top: 0.35rem;
+}

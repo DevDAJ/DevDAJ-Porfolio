@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getAllBlogPosts } from "../data/blog";
+
+const sorted = (await getAllBlogPosts()).sort((a, b) =>
+  b.date.localeCompare(a.date),
+);
+
+function formatBlogDate(iso: string) {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+---
+
+<Layout>
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:py-20">
+    <h1
+      class="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+    >
+      Blog
+    </h1>
+    <p class="mt-3 text-foreground-muted">
+      Personal blog about my experiences and learnings in software development
+      and write ups on projects I've worked on.
+    </p>
+    <ul class="mt-10 divide-y divide-border border-y border-border">
+      {
+        sorted.map((post) => (
+          <li>
+            <a
+              href={`/blog/${post.slug}`}
+              class="block py-6 transition-colors duration-200 ease-out hover:bg-canvas-elevated/50"
+            >
+              <p class="text-xs tabular-nums text-foreground-muted">
+                <time datetime={post.date}>{formatBlogDate(post.date)}</time>
+                <span class="mx-1.5 text-border" aria-hidden="true">
+                  ·
+                </span>
+                <span>{post.readingMinutes} min read</span>
+              </p>
+              <h2 class="mt-1 text-lg font-semibold text-foreground">
+                {post.title}
+              </h2>
+              <p class="mt-2 text-sm text-foreground-muted">{post.excerpt}</p>
+              <span class="mt-3 inline-block text-sm font-medium text-accent">
+                Read post →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

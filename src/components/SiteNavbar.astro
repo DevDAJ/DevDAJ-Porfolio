@@ -1,0 +1,88 @@
+---
+import { links } from "../data/site";
+import ThemeToggle from "./ThemeToggle.astro";
+import Icons from "./Icons.astro";
+
+const navLink =
+  "rounded-md px-2.5 py-1.5 text-sm font-medium text-foreground-muted transition-colors duration-200 ease-out hover:bg-canvas hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-none";
+const navLinkMobile =
+  "block rounded-md px-3 py-2.5 text-sm font-medium text-foreground-muted transition-colors duration-200 ease-out hover:bg-canvas hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-none";
+const resumeClass =
+  "inline-flex items-center gap-1.5 rounded-lg border border-border bg-canvas px-2.5 py-1.5 text-sm font-medium text-foreground shadow-sm transition-colors duration-200 ease-out hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-none";
+const resumeClassMobile =
+  "flex w-full items-center justify-center gap-1.5 rounded-lg border border-border bg-canvas px-3 py-2.5 text-sm font-medium text-foreground shadow-sm transition-colors duration-200 ease-out hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-none";
+---
+
+<header
+  class="sticky top-0 z-20 border-b border-border bg-canvas-elevated/90 backdrop-blur-md"
+>
+  <div
+    class="mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-4 py-3"
+  >
+    <a
+      href="/"
+      class="text-lg font-semibold tracking-tight text-mint transition-colors duration-200 ease-out hover:text-mint-hover motion-reduce:transition-none sm:text-xl"
+    >
+      DevDAJ
+    </a>
+
+    <!-- Desktop: inline nav + resume + theme -->
+    <div class="hidden items-center gap-2 sm:gap-3 md:flex">
+      <nav class="flex items-center gap-0.5 sm:gap-1" aria-label="Main">
+        <a href="/" class={navLink}>Home</a>
+        <a href="/projects" class={navLink}>Projects</a>
+        <a href="/blog" class={navLink}>Blog</a>
+      </nav>
+      <a
+        href={links.resume}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={resumeClass}
+      >
+        <Icons
+          type="material"
+          materialIcon="open_in_new"
+          size={3.5}
+          class="shrink-0 opacity-90"
+        />
+        Resume
+      </a>
+      <ThemeToggle variant="toolbar" />
+    </div>
+
+    <!-- Mobile: menu (theme is floating FAB below) -->
+    <details class="relative md:hidden">
+      <summary
+        class="flex cursor-pointer list-none items-center justify-center rounded-lg border border-border bg-canvas p-2 text-foreground shadow-sm transition-colors duration-200 ease-out hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint marker:hidden motion-reduce:transition-none [&::-webkit-details-marker]:hidden"
+        aria-label="Menu"
+      >
+        <Icons type="material" materialIcon="menu" size={5} class="shrink-0" />
+      </summary>
+      <div
+        class="absolute right-0 top-[calc(100%+0.5rem)] z-50 min-w-50 rounded-xl border border-border bg-canvas-elevated p-2 shadow-lg ring-1 ring-border/50"
+      >
+        <nav class="flex flex-col gap-0.5" aria-label="Main">
+          <a href="/" class={navLinkMobile}>Home</a>
+          <a href="/projects" class={navLinkMobile}>Projects</a>
+          <a href="/blog" class={navLinkMobile}>Blog</a>
+        </nav>
+        <div class="mt-2 border-t border-border pt-2">
+          <a
+            href={links.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={resumeClassMobile}
+          >
+            <Icons
+              type="material"
+              materialIcon="open_in_new"
+              size={4}
+              class="shrink-0 text-mint"
+            />
+            Resume
+          </a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
