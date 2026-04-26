@@ -2,38 +2,16 @@
 import type { ProjectCardProps as Props } from "../types/components";
 import { projectTagsFlat } from "../utils/projectTags";
 import Icons from "./Icons.astro";
+import { dedupeImage } from "../utils/dedupeImage";
+import ImageGallery from "./ImageGallery.astro";
 
 const { project: p, heading = "h3", cardImagePriority = false } = Astro.props;
 const Title = heading;
 const displayTags = [...projectTagsFlat(p)].sort((a, b) => a.localeCompare(b));
 const writeUpHref = p.writeUpSlug ? `/blog/${p.writeUpSlug}` : undefined;
 
-/** Stable id for `aria-controls` / dialog (unique per title + primary image). */
-function projectGalleryId(title: string, primarySrc: string): string {
-  let h = 0;
-  const s = `${title}\0${primarySrc}`;
-  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
-  return `project-gallery-${Math.abs(h).toString(36)}`;
-}
 
-const gallerySlides = p.cardImage
-  ? (() => {
-      const list = [p.cardImage, ...(p.extraCardImages ?? [])];
-      const seen = new Set<string>();
-      return list.filter((img) => {
-        if (seen.has(img.src)) return false;
-        seen.add(img.src);
-        return true;
-      });
-    })()
-  : [];
-
-const galleryDialogId = p.cardImage ? projectGalleryId(p.title, p.cardImage.src) : "";
-const multiImage = gallerySlides.length > 1;
-const galleryLabel =
-  gallerySlides.length > 1
-    ? `View ${gallerySlides.length} project images for ${p.title}`
-    : `View project image for ${p.title}`;
+const gallerySlides = dedupeImage(p);
 ---
 
 <div
@@ -42,135 +20,7 @@ const galleryLabel =
   {
     p.cardImage && gallerySlides.length > 0 && (
       <>
-        <button
-          type="button"
-          class="group relative aspect-4/1.5 w-full shrink-0 cursor-zoom-in overflow-hidden border-b border-border bg-canvas-elevated text-left motion-reduce:cursor-pointer focus-visible:z-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
-          aria-haspopup="dialog"
-          aria-controls={galleryDialogId}
-          aria-label={galleryLabel}
-          data-pg-o
-        >
-          <img
-            src={p.cardImage.src}
-            alt={p.cardImage.alt}
-            class="h-full w-full object-cover object-top transition-transform duration-200 ease-out group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-            width={1200}
-            height={450}
-            loading={cardImagePriority ? "eager" : "lazy"}
-            fetchpriority={cardImagePriority ? "high" : undefined}
-            decoding="async"
-          />
-          <span
-            class="pointer-events-none absolute inset-0 flex items-end justify-end bg-linear-to-t from-canvas/80 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:transition-none"
-            aria-hidden="true"
-          >
-            <span class="inline-flex items-center gap-1.5 rounded-md border border-border/80 bg-canvas/95 px-2.5 py-1 text-xs font-medium text-foreground shadow-sm backdrop-blur-sm">
-              <Icons
-                type="material"
-                materialIcon="photo_library"
-                size={3.5}
-                class="shrink-0 text-mint"
-              />
-              {multiImage ? `${gallerySlides.length} photos` : "Enlarge"}
-            </span>
-          </span>
-        </button>
-        <dialog
-          id={galleryDialogId}
-          class="project-gallery-dialog fixed top-1/2 left-1/2 z-50 m-0 max-h-[min(92vh,52rem)] w-[min(96vw,56rem)] max-w-none -translate-x-1/2 -translate-y-1/2 border-0 bg-transparent p-0 text-foreground shadow-none"
-          data-pg
-          aria-labelledby={`${galleryDialogId}-title`}
-        >
-          <div
-            class="relative z-0 flex max-h-[min(92vh,52rem)] flex-col overflow-hidden rounded-xl border border-border bg-canvas-elevated shadow-lg"
-          >
-            <header
-              class="relative z-70 flex shrink-0 items-center justify-between gap-3 border-b border-border bg-canvas-elevated px-4 py-3"
-            >
-              <h2
-                id={`${galleryDialogId}-title`}
-                class="min-w-0 truncate text-base font-semibold tracking-tight"
-              >
-                {p.title}
-              </h2>
-              <button
-                type="button"
-                class="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-canvas text-foreground transition-colors hover:border-mint/40 hover:bg-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
-                aria-label="Close gallery"
-                data-pg-x
-              >
-                <Icons type="material" materialIcon="close" size={5} class="shrink-0" />
-              </button>
-            </header>
-            <div class="relative min-h-0 flex-1 bg-canvas p-3 sm:p-4">
-              <div
-                class="relative flex min-h-48 items-center justify-center sm:min-h-72"
-              >
-                {
-                  gallerySlides.map((slide, i) => (
-                    <figure
-                      class="m-0 flex max-h-[min(70vh,40rem)] w-full items-center justify-center"
-                      hidden={i !== 0}
-                      data-pg-s
-                      aria-hidden={i !== 0 ? "true" : "false"}
-                    >
-                      <img
-                        src={slide.src}
-                        alt={slide.alt}
-                        class="max-h-[min(70vh,40rem)] w-auto max-w-full rounded-lg object-contain shadow-sm"
-                        loading={i === 0 ? "eager" : "lazy"}
-                        decoding="async"
-                      />
-                    </figure>
-                  ))
-                }
-              </div>
-            </div>
-          </div>
-          {
-            multiImage && (
-              <div
-                class="fixed bottom-4 left-1/2 z-60 flex -translate-x-1/2 items-center gap-4 rounded-full border border-border/80 bg-canvas/90 px-4 py-2 shadow-lg backdrop-blur-md"
-                role="group"
-                aria-label="Image carousel"
-              >
-                <button
-                  type="button"
-                  class="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-canvas text-foreground shadow-sm transition-colors hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
-                  aria-label="Previous image"
-                  data-pg-p
-                >
-                  <Icons
-                    type="material"
-                    materialIcon="chevron_left"
-                    size={6}
-                    class="shrink-0"
-                  />
-                </button>
-                <p
-                  class="min-w-18 shrink-0 text-center text-sm tabular-nums text-foreground-muted"
-                  data-pg-i
-                  aria-live="polite"
-                >
-                  {`1 / ${gallerySlides.length}`}
-                </p>
-                <button
-                  type="button"
-                  class="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-canvas text-foreground shadow-sm transition-colors hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint"
-                  aria-label="Next image"
-                  data-pg-n
-                >
-                  <Icons
-                    type="material"
-                    materialIcon="chevron_right"
-                    size={6}
-                    class="shrink-0"
-                  />
-                </button>
-              </div>
-            )
-          }
-        </dialog>
+        <ImageGallery project={p} cardImagePriority={cardImagePriority} />
       </>
     )
   }
