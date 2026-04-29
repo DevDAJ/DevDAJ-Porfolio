@@ -56,29 +56,17 @@ export const timeline: TimelineEntry[] = [
 
 export const projects: Project[] = [
   {
-    title: "Fitness Tracking SaaS",
-    description: "Fitness tracking SaaS for tracking your fitness goals.",
+    title: "Fitnexx | Privacy first gym performance and macro tracking app",
+    description: "Privacy first gym performance and macro tracking app",
     tags: ["SaaS", "Fitness", "Still in development"],
     technologies: ["React Native", "TypeScript", "Expo", "Tailwind CSS"],
     featured: true,
     cardImage: {
-      src: "/images/fitness-saas/0.webp",
-      alt: "Fitness Tracking SaaS 0",
+      src: "/images/fitnexx.png",
+      alt: "Fitnexx",
     },
-    extraCardImages: [
-      {
-        src: "/images/fitness-saas/1.webp",
-        alt: "Fitness Tracking SaaS 1",
-      },
-      {
-        src: "/images/fitness-saas/2.webp",
-        alt: "Fitness Tracking SaaS 2",
-      },
-	  {
-		src: "/images/fitness-saas/3.webp",
-		alt: "Fitness Tracking SaaS 3",
-	  }
-    ],
+    githubUrl: "https://github.com/DevDAJ/fitnexx",
+    projectUrl: "https://fitnexxtracking.vercel.app/",
   },
   {
     title: "DevDAJ IAM",
