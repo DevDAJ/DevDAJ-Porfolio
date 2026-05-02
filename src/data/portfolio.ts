@@ -30,9 +30,10 @@ export const timeline: TimelineEntry[] = [
     startLabel: "August 2024",
     endLabel: "Present",
     bullets: [
-      "Shipped <strong>web</strong> and <strong>backend</strong> features for internal tooling.",
-      "Owned <strong>React Native</strong> for web, mobile, and TVs, plus SDKs for <strong>DirecTV</strong>",
-      "Onboarded new hires for <strong>large-scale, multi-platform</strong> delivery.",
+      "Designed, implemented, and released <strong>web</strong> and <strong>backend</strong> capabilities for internal tooling from APIs and integrations to dashboards teams rely on day to day.",
+      "Part of a <strong>React Native</strong> codebase that targets <strong>web</strong>, <strong>mobile</strong>, and <strong>TVs</strong>, including native integrations and SDK work for <strong>DirecTV</strong> deployments.",
+      "Partnered across product and platform to unblock releases, tighten quality, and keep shared components consistent across surfaces.",
+      "Ran structured <strong>onboarding</strong> for new hires so they could contribute quickly to <strong>large-scale, multi-platform</strong> shipping, architecture walkthroughs, coding standards, and release practices.",
     ],
   },
   {
@@ -47,9 +48,10 @@ export const timeline: TimelineEntry[] = [
     startLabel: "February 2023",
     endLabel: "August 2024",
     bullets: [
-      "<strong>React</strong> UI for banking; <strong>~90% unit test</strong> coverage.",
-      "Built <strong>VegaSpread 4.0</strong> in <strong>React</strong> — design to prod; <strong>high-volume</strong> data.",
-      "<strong>Playwright</strong> automation for <strong>E2E</strong> and regression coverage.",
+      "Delivered accessible, production-grade <strong>React</strong> interfaces for banking workflows, partnering with stakeholders on requirements while keeping regressions rare through disciplined testing and <strong>~90% unit test</strong> coverage on critical paths.",
+      "Owned <strong>VegaSpread 4.0</strong> end to end in <strong>React</strong> from translating <strong>design</strong> specs into reusable components through <strong>production</strong> launch with a focus on rendering and interacting with <strong>high-volume</strong> market data reliably.",
+      "Expanded <strong>Playwright</strong> automation to cover critical user journeys, giving the team repeatable <strong>E2E</strong> signal and safer releases during iterative feature work.",
+      "Collaborated tightly on performance, UX polish, and shared UI patterns so new features shipped quickly without fragmenting the product experience.",
     ],
   },
 ];
@@ -68,20 +70,21 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/DevDAJ/fitnexx",
     projectUrl: "https://fitnexxtracking.vercel.app/",
   },
-  {
-    title: "DevDAJ IAM",
-    description:
-      "Identity and Access Management System for DevDAJ SaaS products.",
-    tags: [
-      "Microservices",
-      "Security",
-      "Still in development",
-      "Still in development",
-    ],
-    technologies: ["TypeScript", "Bun", "PostgreSQL", "JWT", "ElysiaJS"],
-    featured: true,
-    githubUrl: "https://github.com/DevDAJ/DevDAJ-IAM",
-  },
+  // Still in progess, not working on it for now
+  // {
+  //   title: "DevDAJ IAM",
+  //   description:
+  //     "Identity and Access Management System for DevDAJ SaaS products.",
+  //   tags: [
+  //     "Microservices",
+  //     "Security",
+  //     "Still in development",
+  //     "Still in development",
+  //   ],
+  //   technologies: ["TypeScript", "Bun", "PostgreSQL", "JWT", "ElysiaJS"],
+  //   featured: true,
+  //   githubUrl: "https://github.com/DevDAJ/DevDAJ-IAM",
+  // },
   {
     title: "Owlect",
     description:
