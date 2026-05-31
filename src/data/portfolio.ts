@@ -70,6 +70,20 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/DevDAJ/fitnexx",
     projectUrl: "https://fitnexxtracking.vercel.app/",
   },
+  {
+    title: "Color Theroy Infographic - GSAP Animation",
+    description:
+      "Created a web infographic to learn and build GSAP animations and explore Web Components",
+    tags: ["Frontend"],
+    technologies: ["Web Components", "GSAP", "TypeScript"],
+    featured: true,
+    cardImage: {
+      src: "/images/color.png",
+      alt: "Color Theory Infographic",
+    },
+    projectUrl: "https://color-theory-interactive-infographic.netlify.app/",
+    githubUrl: "https://github.com/DevDAJ/Interactive-Infographic",
+  },
   // Still in progess, not working on it for now
   // {
   //   title: "DevDAJ IAM",
