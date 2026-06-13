@@ -22,8 +22,8 @@ import { serviceTiers, contactEmail } from "../data/services";
       <button
         type="button"
         data-use-case="personal"
-        class="toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200"
-        aria-pressed="false"
+        class="toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 bg-canvas-elevated text-foreground shadow-sm"
+        aria-pressed="true"
       >
         <span class="flex items-center justify-center gap-2">
           <Icons type="material" materialIcon="person" size={4} />
@@ -33,8 +33,8 @@ import { serviceTiers, contactEmail } from "../data/services";
       <button
         type="button"
         data-use-case="commercial"
-        class="toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200"
-        aria-pressed="true"
+        class="toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 text-foreground-muted hover:text-foreground"
+        aria-pressed="false"
       >
         <span class="flex items-center justify-center gap-2">
           <Icons type="material" materialIcon="business" size={4} />
@@ -46,7 +46,7 @@ import { serviceTiers, contactEmail } from "../data/services";
     <div
       id="pricing-grid"
       class="mt-6 grid gap-4 sm:grid-cols-2"
-      data-active-use-case="commercial"
+      data-active-use-case="personal"
     >
       {serviceTiers.map((tier) => (
         <ServiceTierCard tier={tier} />
@@ -198,8 +198,8 @@ import { serviceTiers, contactEmail } from "../data/services";
             required
             class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20"
           >
-            <option value="personal">Personal</option>
-            <option value="commercial" selected>Commercial</option>
+            <option value="personal" selected>Personal</option>
+            <option value="commercial">Commercial</option>
           </select>
         </div>
 
@@ -265,13 +265,16 @@ import { contactEmail } from "../data/services";
 
       const personalPrices = grid?.querySelectorAll("[data-price-for='personal']");
       const commercialPrices = grid?.querySelectorAll("[data-price-for='commercial']");
+      const complexCard = grid?.querySelector<HTMLElement>("[data-tier-id='complex-app']");
 
       if (useCase === "personal") {
         personalPrices?.forEach((el) => el.classList.remove("hidden"));
         commercialPrices?.forEach((el) => el.classList.add("hidden"));
+        if (complexCard) complexCard.classList.add("hidden");
       } else {
         personalPrices?.forEach((el) => el.classList.add("hidden"));
         commercialPrices?.forEach((el) => el.classList.remove("hidden"));
+        if (complexCard) complexCard.classList.remove("hidden");
       }
 
       if (useCaseSelect) useCaseSelect.value = useCase;
@@ -284,6 +287,8 @@ import { contactEmail } from "../data/services";
     if (useCaseSelect) {
       useCaseSelect.addEventListener("change", () => activate(useCaseSelect.value));
     }
+
+    activate(grid.dataset.activeUseCase ?? "personal");
   }
 
   function initQuoteForm() {
