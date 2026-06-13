@@ -51,7 +51,7 @@ html.dark {
   --color-ring: var(--ring);
 }
 
-/* Viewport scrollbar — uses theme tokens (light/dark follow html.dark). */
+/* Viewport scrollbar - uses theme tokens (light/dark follow html.dark). */
 html {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in oklch, var(--mint) 55%, var(--border))

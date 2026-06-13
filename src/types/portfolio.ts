@@ -35,12 +35,12 @@ export type Project = {
    * Omit when there is only one image.
    */
   extraCardImages?: { src: string; alt: string }[];
-  /** Live site or demo — shows “Open project” when set. */
+  /** Live site or demo - shows “Open project” when set. */
   projectUrl?: string;
-  /** Repository — shows “View GitHub” when set. */
+  /** Repository - shows “View GitHub” when set. */
   githubUrl?: string;
   /**
-   * Optional `blogs` collection entry id (filename without `.mdx`) — shows a “Write-up” link to `/blog/[slug]`.
+   * Optional `blogs` collection entry id (filename without `.mdx`) - shows a “Write-up” link to `/blog/[slug]`.
    */
   writeUpSlug?: string;
 };

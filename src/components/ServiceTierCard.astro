@@ -1,0 +1,70 @@
+---
+import Icons from "./Icons.astro";
+import type { ServiceTier } from "../data/services";
+
+interface Props {
+  tier: ServiceTier;
+}
+
+const { tier } = Astro.props;
+
+function fmt(p: { min: number; max: number | null }): string {
+  return p.max === null
+    ? `RM ${p.min.toLocaleString("en-MY")}+`
+    : `RM ${p.min.toLocaleString("en-MY")} – RM ${p.max.toLocaleString("en-MY")}`;
+}
+
+const personalPrice = fmt(tier.prices.personal);
+const commercialPrice = fmt(tier.prices.commercial);
+---
+
+<article class="flex flex-col rounded-xl border border-border bg-canvas-elevated p-6 shadow-sm transition-colors duration-200 hover:border-mint/40">
+  <div class="flex items-center gap-3">
+    <div
+      class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-mint/10 text-mint"
+    >
+      <Icons type="material" materialIcon={tier.icon} size={5} />
+    </div>
+    <h2 class="text-lg font-semibold tracking-tight text-foreground">
+      {tier.name}
+    </h2>
+  </div>
+
+  <p class="mt-3 text-sm leading-relaxed text-foreground-muted">
+    {tier.description}
+  </p>
+
+  <p
+    class="price-personal mt-4 text-2xl font-semibold tracking-tight text-foreground"
+    data-price-for="personal"
+  >
+    {personalPrice}
+  </p>
+  <p
+    class="price-commercial mt-4 hidden text-2xl font-semibold tracking-tight text-foreground"
+    data-price-for="commercial"
+  >
+    {commercialPrice}
+  </p>
+
+  <ul class="mt-4 flex flex-col gap-2">
+    {tier.features.map((feature) => (
+      <li class="flex items-start gap-2 text-sm text-foreground-muted">
+        <Icons
+          type="material"
+          materialIcon="check_circle"
+          size={4}
+          class="mt-0.5 shrink-0 text-mint"
+        />
+        <span>{feature}</span>
+      </li>
+    ))}
+  </ul>
+
+  <div
+    class="mt-auto flex items-center gap-2 pt-4 text-sm text-foreground-muted"
+  >
+    <Icons type="material" materialIcon="schedule" size={4} class="shrink-0" />
+    <span>Estimated timeline: {tier.timeline}</span>
+  </div>
+</article>

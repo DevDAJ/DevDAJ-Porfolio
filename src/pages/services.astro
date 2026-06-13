@@ -1,0 +1,315 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ServiceTierCard from "../components/ServiceTierCard.astro";
+import Icons from "../components/Icons.astro";
+import { serviceTiers, contactEmail } from "../data/services";
+---
+
+<Layout>
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:py-20">
+    <h1
+      class="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+    >
+      Services &amp; Quotations
+    </h1>
+    <p class="mt-3 text-foreground-muted">
+      I build web solutions for clients across Malaysia. Below are indicative
+      pricing ranges based on project complexity and use case. Every project is
+      unique - let's discuss yours.
+    </p>
+
+    <div id="use-case-toggle" class="mt-8 flex items-center gap-1 rounded-xl border border-border bg-canvas p-1">
+      <button
+        type="button"
+        data-use-case="personal"
+        class="toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200"
+        aria-pressed="false"
+      >
+        <span class="flex items-center justify-center gap-2">
+          <Icons type="material" materialIcon="person" size={4} />
+          Personal
+        </span>
+      </button>
+      <button
+        type="button"
+        data-use-case="commercial"
+        class="toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200"
+        aria-pressed="true"
+      >
+        <span class="flex items-center justify-center gap-2">
+          <Icons type="material" materialIcon="business" size={4} />
+          Commercial
+        </span>
+      </button>
+    </div>
+
+    <div
+      id="pricing-grid"
+      class="mt-6 grid gap-4 sm:grid-cols-2"
+      data-active-use-case="commercial"
+    >
+      {serviceTiers.map((tier) => (
+        <ServiceTierCard tier={tier} />
+      ))}
+    </div>
+
+    <div
+      id="disclaimer"
+      class="mt-6 rounded-lg border border-border bg-canvas p-4 text-sm text-foreground-muted"
+    >
+      <strong class="text-foreground">Note:</strong> Prices are indicative and
+      may vary based on project requirements, scope changes, and timeline.
+      Final pricing will be discussed during our consultation.
+    </div>
+
+    <hr class="my-16 border-border" />
+
+    <section id="get-a-quote">
+      <h2
+        class="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
+      >
+        Get a Quote
+      </h2>
+      <p class="mt-2 text-foreground-muted">
+        Tell me about your project and I'll get back to you with a tailored
+        quote within 48 hours.
+      </p>
+
+      <form
+        id="quote-form"
+        class="mt-8 flex flex-col gap-5"
+        novalidate
+      >
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label
+              for="form-name"
+              class="mb-1.5 block text-sm font-medium text-foreground"
+            >
+              Name <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="form-name"
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+              class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted/50 focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20"
+            />
+          </div>
+          <div>
+            <label
+              for="form-email"
+              class="mb-1.5 block text-sm font-medium text-foreground"
+            >
+              Email <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="form-email"
+              name="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted/50 focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20"
+            />
+          </div>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label
+              for="form-type"
+              class="mb-1.5 block text-sm font-medium text-foreground"
+            >
+              Project Type <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="form-type"
+              name="type"
+              required
+              class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20"
+            >
+              <option value="">Select a type…</option>
+              <option value="small-site">Small Site</option>
+              <option value="mvp">MVP / Basic App</option>
+              <option value="moderate-app">Simple / Moderate App</option>
+              <option value="complex-app">Complex / Enterprise App</option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="form-budget"
+              class="mb-1.5 block text-sm font-medium text-foreground"
+            >
+              Budget Range
+            </label>
+            <select
+              id="form-budget"
+              name="budget"
+              class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20"
+            >
+              <option value="">Select a range…</option>
+              <option value="< 3000">Under RM 3,000</option>
+              <option value="3000-8000">RM 3,000 – RM 8,000</option>
+              <option value="8000-20000">RM 8,000 – RM 20,000</option>
+              <option value="20000-60000">RM 20,000 – RM 60,000</option>
+              <option value="60000-150000">RM 60,000 – RM 150,000</option>
+              <option value="150000+">RM 150,000+</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="form-description"
+            class="mb-1.5 block text-sm font-medium text-foreground"
+          >
+            Project Description <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            id="form-description"
+            name="description"
+            rows={5}
+            required
+            placeholder="Tell me about your project, goals, and any specific requirements…"
+            class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground placeholder:text-foreground-muted/50 focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20 resize-y"
+          ></textarea>
+        </div>
+
+        <div>
+          <label
+            for="form-use-case"
+            class="mb-1.5 block text-sm font-medium text-foreground"
+          >
+            Use Case <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="form-use-case"
+            name="useCase"
+            required
+            class="w-full rounded-lg border border-border bg-canvas px-3.5 py-2.5 text-sm text-foreground focus:border-mint focus:outline-none focus:ring-2 focus:ring-mint/20"
+          >
+            <option value="personal">Personal</option>
+            <option value="commercial" selected>Commercial</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="inline-flex cursor-pointer items-center justify-center gap-2 self-start rounded-lg bg-mint px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-mint-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint"
+        >
+          <Icons type="material" materialIcon="send" size={4} />
+          Send Request
+        </button>
+      </form>
+
+      <p class="mt-4 text-sm text-foreground-muted">
+        Or email me directly at{" "}
+        <a
+          href={`mailto:${contactEmail}`}
+          class="text-mint underline decoration-mint/30 underline-offset-2 transition-colors hover:decoration-mint"
+        >
+          {contactEmail}
+        </a>
+      </p>
+    </section>
+  </section>
+</Layout>
+
+<script>
+import { contactEmail } from "../data/services";
+
+  function initUseCaseToggle() {
+    const grid = document.getElementById("pricing-grid");
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      "#use-case-toggle .toggle-btn"
+    );
+    const useCaseSelect = document.getElementById(
+      "form-use-case"
+    ) as HTMLSelectElement | null;
+
+    if (!grid || !buttons.length) return;
+
+    function activate(useCase: string) {
+      buttons.forEach((btn) => {
+        const isActive = btn.dataset.useCase === useCase;
+        btn.setAttribute("aria-pressed", String(isActive));
+        btn.className = isActive
+          ? "toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 bg-canvas-elevated text-foreground shadow-sm"
+          : "toggle-btn flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 text-foreground-muted hover:text-foreground";
+      });
+
+      grid?.setAttribute("data-active-use-case", useCase);
+
+      const personalPrices = grid?.querySelectorAll("[data-price-for='personal']");
+      const commercialPrices = grid?.querySelectorAll("[data-price-for='commercial']");
+
+      if (useCase === "personal") {
+        personalPrices?.forEach((el) => el.classList.remove("hidden"));
+        commercialPrices?.forEach((el) => el.classList.add("hidden"));
+      } else {
+        personalPrices?.forEach((el) => el.classList.add("hidden"));
+        commercialPrices?.forEach((el) => el.classList.remove("hidden"));
+      }
+
+      if (useCaseSelect) useCaseSelect.value = useCase;
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => activate(btn.dataset.useCase ?? "commercial"));
+    });
+
+    if (useCaseSelect) {
+      useCaseSelect.addEventListener("change", () => activate(useCaseSelect.value));
+    }
+  }
+
+  function initQuoteForm() {
+    const form = document.getElementById("quote-form") as HTMLFormElement | null;
+    if (!form) return;
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const fd = new FormData(form);
+      const name = fd.get("name") as string;
+      const email = fd.get("email") as string;
+      const type = fd.get("type") as string;
+      const budget = fd.get("budget") as string;
+      const useCase = fd.get("useCase") as string;
+      const description = fd.get("description") as string;
+
+      const typeLabels: Record<string, string> = {
+        "small-site": "Small Site",
+        mvp: "MVP / Basic App",
+        "moderate-app": "Simple / Moderate App",
+        "complex-app": "Complex / Enterprise App",
+      };
+
+      const subject = encodeURIComponent("Quote Request - DevDAJ");
+      const body = encodeURIComponent(
+        [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Project Type: ${typeLabels[type] || type}`,
+          `Use Case: ${useCase === "commercial" ? "Commercial" : "Personal"}`,
+          budget ? `Budget: ${budget}` : null,
+          "",
+          `Description:`,
+          description,
+        ]
+          .filter(Boolean)
+          .join("\n")
+      );
+
+      window.open(`mailto:${contactEmail}?subject=${subject}&body=${body}`, "_blank");
+    });
+  }
+
+  initUseCaseToggle();
+  initQuoteForm();
+  document.addEventListener("astro:page-load", () => {
+    initUseCaseToggle();
+    initQuoteForm();
+  });
+</script>

@@ -1,4 +1,4 @@
-/** simple-icons slugs bundled in `src/utils/brandIcons.ts` — add there when using a new brand. */
+/** simple-icons slugs bundled in `src/utils/brandIcons.ts` - add there when using a new brand. */
 export type SimpleBrand =
   | "siAstro"
   | "siExpress"

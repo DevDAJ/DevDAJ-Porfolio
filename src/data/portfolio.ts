@@ -102,7 +102,7 @@ export const projects: Project[] = [
   {
     title: "Owlect",
     description:
-      "Learning platform for CodeNection 2022 — SDG 4 (open education); 3rd place.",
+      "Learning platform for CodeNection 2022 - SDG 4 (open education); 3rd place.",
     tags: ["Frontend"],
     technologies: ["Vue.js", "Tailwind CSS", "Contentful", "GraphQL"],
     featured: false,
