@@ -11,11 +11,12 @@ const { tier } = Astro.props;
 function fmt(p: { min: number; max: number | null }): string {
   return p.max === null
     ? `RM ${p.min.toLocaleString("en-MY")}+`
-    : `RM ${p.min.toLocaleString("en-MY")} – RM ${p.max.toLocaleString("en-MY")}`;
+    : `RM ${p.min.toLocaleString("en-MY")} - RM ${p.max.toLocaleString("en-MY")}`;
 }
 
 const personalPrice = fmt(tier.prices.personal);
 const commercialPrice = fmt(tier.prices.commercial);
+
 ---
 
 <article class="flex flex-col rounded-xl border border-border bg-canvas-elevated p-6 shadow-sm transition-colors duration-200 hover:border-mint/40">
@@ -48,7 +49,8 @@ const commercialPrice = fmt(tier.prices.commercial);
   </p>
 
   <ul class="mt-4 flex flex-col gap-2">
-    {tier.features.map((feature) => (
+    {tier.features.map((feature) => 
+    (typeof feature === "string") ?(
       <li class="flex items-start gap-2 text-sm text-foreground-muted">
         <Icons
           type="material"
@@ -57,8 +59,26 @@ const commercialPrice = fmt(tier.prices.commercial);
           class="mt-0.5 shrink-0 text-mint"
         />
         <span>{feature}</span>
-      </li>
-    ))}
+      </li>): (
+          <li class="flex items-start gap-2 text-sm text-foreground-muted">
+            <Icons
+              type="material"
+              materialIcon="check_circle"
+              size={4}
+              class="mt-0.5 shrink-0 text-mint"
+            />
+            <span>
+              {feature.prefix}
+              <strong class="price-personal text-foreground" data-price-for="personal">
+                {feature.personal}
+              </strong>
+              <strong class="price-commercial hidden text-foreground" data-price-for="commercial">
+                {feature.commercial}
+              </strong>
+            </span>
+          </li>
+        )
+    )}
   </ul>
 
   <div

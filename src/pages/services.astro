@@ -150,22 +150,31 @@ import { serviceTiers, contactEmail } from "../data/services";
             >
               <option value="">Select a range…</option>
               <option value="< 3000">Under RM 3,000</option>
-              <option value="3000-8000">RM 3,000 – RM 8,000</option>
-              <option value="8000-20000">RM 8,000 – RM 20,000</option>
-              <option value="20000-60000">RM 20,000 – RM 60,000</option>
-              <option value="60000-150000">RM 60,000 – RM 150,000</option>
+              <option value="3000-8000">RM 3,000 - RM 8,000</option>
+              <option value="8000-20000">RM 8,000 - RM 20,000</option>
+              <option value="20000-60000">RM 20,000 - RM 60,000</option>
+              <option value="60000-150000">RM 60,000 - RM 150,000</option>
               <option value="150000+">RM 150,000+</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label
-            for="form-description"
-            class="mb-1.5 block text-sm font-medium text-foreground"
-          >
-            Project Description <span class="text-red-500">*</span>
-          </label>
+          <div class="mb-1.5 flex items-center justify-between">
+            <label
+              for="form-description"
+              class="block text-sm font-medium text-foreground"
+            >
+              Project Description <span class="text-red-500">*</span>
+            </label>
+            <button
+              type="button"
+              id="template-btn"
+              class="text-xs text-mint underline decoration-mint/30 underline-offset-2 transition-colors hover:decoration-mint"
+            >
+              Use template
+            </button>
+          </div>
           <textarea
             id="form-description"
             name="description"
@@ -202,6 +211,19 @@ import { serviceTiers, contactEmail } from "../data/services";
           Send Request
         </button>
       </form>
+
+      <div
+        id="quote-preview"
+        class="mt-10 hidden rounded-xl border border-border bg-canvas p-5"
+      >
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-foreground-muted">
+          Quotation Request Preview
+        </h3>
+        <pre
+          id="quote-template"
+          class="mt-3 whitespace-pre-wrap text-sm text-foreground leading-relaxed font-[inherit]"
+        ></pre>
+      </div>
 
       <p class="mt-4 text-sm text-foreground-muted">
         Or email me directly at{" "}
@@ -268,6 +290,92 @@ import { contactEmail } from "../data/services";
     const form = document.getElementById("quote-form") as HTMLFormElement | null;
     if (!form) return;
 
+    const formFields = [
+      "name", "email", "type", "budget", "useCase", "description"
+    ] as const;
+
+    const typeLabels: Record<string, string> = {
+      "small-site": "Small Site",
+      mvp: "MVP / Basic App",
+      "moderate-app": "Simple / Moderate App",
+      "complex-app": "Complex / Enterprise App",
+    };
+
+    const preview = document.getElementById("quote-preview") as HTMLDivElement | null;
+    const template = document.getElementById("quote-template") as HTMLPreElement | null;
+    const templateBtn = document.getElementById("template-btn") as HTMLButtonElement | null;
+    const descriptionField = document.getElementById("form-description") as HTMLTextAreaElement | null;
+
+    const descriptionTemplate = `Project: [Your project name or idea]
+Goals: [What do you want to achieve?]
+Requirements: [Any specific features, technologies, or requirements?]`;
+
+    function getValues(): Record<string, string> {
+      const fd = new FormData(form!);
+      const vals: Record<string, string> = {};
+      for (const field of formFields) {
+        vals[field] = (fd.get(field) as string) || "";
+      }
+      return vals;
+    }
+
+    function revisionRate(useCase: string): string {
+      return useCase === "personal" ? "RM50/round" : "RM300/round";
+    }
+
+    function buildTemplate(v: Record<string, string>): string {
+      const typeLabel = typeLabels[v.type] || v.type || "[Not selected]";
+      const useCaseLabel = v.useCase === "commercial" ? "Commercial" : "Personal";
+      const budgetLine = v.budget ? `Budget Range: ${v.budget}` : null;
+      const rate = revisionRate(v.useCase);
+
+      return [
+        "Quotation Request",
+        "",
+        `From: ${v.name || "[Your name]"}`,
+        `Email: ${v.email || "[Your email]"}`,
+        `Project Type: ${typeLabel}`,
+        `Use Case: ${useCaseLabel}`,
+        budgetLine,
+        "",
+        "Project Description",
+        v.description || "[Describe your project]",
+        "",
+        "Revision Policy",
+        "Unlimited revisions until final sign-off.",
+        `Post-sign-off revisions: ${rate}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+    }
+
+    function updatePreview() {
+      if (!preview || !template) return;
+      const vals = getValues();
+      const hasInput = formFields.some((f) => vals[f]?.trim());
+      if (hasInput) {
+        preview.classList.remove("hidden");
+        template.textContent = buildTemplate(vals);
+      } else {
+        preview.classList.add("hidden");
+      }
+    }
+
+    if (templateBtn && descriptionField) {
+      templateBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        descriptionField.value = descriptionTemplate;
+        descriptionField.focus();
+        updatePreview();
+      });
+    }
+
+    for (const field of formFields) {
+      const el = form.querySelector(`[name="${field}"]`);
+      el?.addEventListener("input", updatePreview);
+      el?.addEventListener("change", updatePreview);
+    }
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -279,13 +387,7 @@ import { contactEmail } from "../data/services";
       const useCase = fd.get("useCase") as string;
       const description = fd.get("description") as string;
 
-      const typeLabels: Record<string, string> = {
-        "small-site": "Small Site",
-        mvp: "MVP / Basic App",
-        "moderate-app": "Simple / Moderate App",
-        "complex-app": "Complex / Enterprise App",
-      };
-
+      const rate = revisionRate(useCase);
       const subject = encodeURIComponent("Quote Request - DevDAJ");
       const body = encodeURIComponent(
         [
@@ -297,6 +399,10 @@ import { contactEmail } from "../data/services";
           "",
           `Description:`,
           description,
+          "",
+          "Revision Policy",
+          "Unlimited revisions until final sign-off.",
+          `Post-sign-off revisions: ${rate}`,
         ]
           .filter(Boolean)
           .join("\n")

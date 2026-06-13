@@ -6,7 +6,7 @@ export interface ServiceTier {
   description: string;
   icon: string;
   prices: Record<UseCase, { min: number; max: number | null }>;
-  features: string[];
+  features: (string | { prefix: string; personal: string; commercial: string })[];
   timeline: string;
 }
 
@@ -26,7 +26,7 @@ export const serviceTiers: ServiceTier[] = [
       "Basic SEO optimization",
       "Contact form integration",
       "Hosting setup assistance",
-      "1 revision round",
+      "Unlimited revisions",
     ],
     timeline: "1–2 weeks",
   },
@@ -46,7 +46,8 @@ export const serviceTiers: ServiceTier[] = [
       "Database integration",
       "Basic authentication",
       "Rapid delivery timeline",
-      "1 revision round",
+      "Unlimited revisions until sign-off",
+      { prefix: "Post-sign-off revisions at ", personal: "RM50", commercial: "RM300" },
     ],
     timeline: "2–4 weeks",
   },
@@ -66,15 +67,15 @@ export const serviceTiers: ServiceTier[] = [
       "Admin dashboard",
       "Payment gateway integration",
       "Third-party API integration",
-      "2 revision rounds",
+      "Unlimited revisions until sign-off",
+      { prefix: "Post-sign-off revisions at ", personal: "RM50", commercial: "RM300" },
     ],
     timeline: "4–12 weeks",
   },
   {
     id: "complex-app",
     name: "Complex / Enterprise App",
-    description:
-      "Custom APIs, fintech platforms, real-time systems - built to scale from day one.",
+    description: "Custom APIs, fintech platforms, real-time systems - built to scale from day one.",
     icon: "hub",
     prices: {
       personal: { min: 20000, max: 50000 },
@@ -87,7 +88,8 @@ export const serviceTiers: ServiceTier[] = [
       "Advanced security & compliance",
       "CI/CD pipeline setup",
       "Performance optimization & load testing",
-      "3 revision rounds",
+      "Unlimited revisions until sign-off",
+      { prefix: "Post-sign-off revisions at ", personal: "RM50", commercial: "RM300" },
       "Priority support",
     ],
     timeline: "8–24+ weeks",
