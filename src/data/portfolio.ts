@@ -1,7 +1,7 @@
 import type { SimpleBrand } from "../types/icons";
-import type { Project, TimelineEntry } from "../types/portfolio";
+import type { Project, TimelineEntry, AwardCertificate } from "../types/portfolio";
 
-export type { Project, TimelineEntry, TimelineLink } from "../types/portfolio";
+export type { Project, TimelineEntry, TimelineLink, AwardCertificate } from "../types/portfolio";
 
 /** Homepage skills strip (`SimpleBrand` = simple-icons export name). */
 export type HomepageSkill = { label: string; icon: SimpleBrand };
@@ -15,6 +15,31 @@ export const homepageSkills: HomepageSkill[] = [
   { label: "Astro", icon: "siAstro" },
   { label: "Tailwind CSS", icon: "siTailwindcss" },
   { label: "PostgreSQL", icon: "siPostgresql" },
+];
+
+export const awardsCertificates: AwardCertificate[] = [
+  {
+    title: "Frontend Developer (React)",
+    issuer: "HackerRank",
+    date: "May 2024",
+    url: "https://www.hackerrank.com/certificates/9a20168f02ba",
+  },
+  {
+    title: "CS50x",
+    issuer: "Harvard University",
+    date: "Jan 2023",
+    url: "https://certificates.cs50.io/56636a9b-ef0a-4d21-b63d-8e021bce7dba.pdf",
+  },
+  {
+    title: "CodeNection 2022 — 3rd Place",
+    issuer: "Multimedia University Malaysia",
+    date: "November 2022",
+  },
+  {
+    title: "Oddesey Hackfest",
+    issuer: "University Malaya",
+    date: "October 2022",
+  },
 ];
 
 export const timeline: TimelineEntry[] = [
@@ -60,6 +85,11 @@ export const projects: Project[] = [
   {
     title: "Fitnexx | Privacy first gym performance and macro tracking app",
     description: "Privacy first gym performance and macro tracking app",
+    bullets: [
+      "Built a cross-platform <strong>React Native</strong> and <strong>Expo</strong> app for gym performance tracking and macro logging.",
+      "Designed a <strong>privacy-first</strong> architecture with a <strong>local-first sync engine</strong> and no external data sharing.",
+      "Implemented calorie and macro nutrient tracking with <strong>custom meal logging</strong> and daily goal management.",
+    ],
     tags: ["SaaS", "Fitness", "Still in development"],
     technologies: ["React Native", "TypeScript", "Expo", "Tailwind CSS"],
     featured: true,
@@ -74,6 +104,11 @@ export const projects: Project[] = [
     title: "Color Theroy Infographic - GSAP Animation",
     description:
       "Created a web infographic to learn and build GSAP animations and explore Web Components",
+    bullets: [
+      "Built an interactive web infographic using <strong>GSAP</strong> scroll-triggered animations and <strong>Web Components</strong>.",
+      "Explored custom element lifecycles, shadow DOM encapsulation, and reusable component design patterns.",
+      "Designed a visually engaging learning tool that explains color theory concepts through animated examples.",
+    ],
     tags: ["Frontend"],
     technologies: ["Web Components", "GSAP", "TypeScript"],
     featured: true,

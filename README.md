@@ -31,7 +31,7 @@ Personal site and blog built with **Astro**: static pages, **MDX** posts, projec
 | `src/types/`               | TypeScript types and component prop interfaces (`portfolio`, `blog`, `icons`, `components`). |
 | `src/utils/`               | Shared helpers (`age`, `tenure`, `readingTime`, `projectTags`) and small client modules (e.g. project tag filter, bento grid, timeline rail). |
 | `src/styles/global.css`    | Global and design tokens (Tailwind v4).                                   |
-| `public/`                  | Static assets (`favicon`, optional `resume.pdf`, images).                 |
+| `public/`                  | Static assets (`favicon`, images).                                        |
 
 Site configuration used to live under `src/config/`; it is merged into **`src/data/`** so content-adjacent settings and copy live in one place.
 

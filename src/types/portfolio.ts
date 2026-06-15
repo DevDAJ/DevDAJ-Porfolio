@@ -1,5 +1,13 @@
 export type TimelineLink = { label: string; href: string };
 
+export type AwardCertificate = {
+  title: string;
+  issuer: string;
+  date: string;
+  /** Optional URL for verifiable digital certifications */
+  url?: string;
+};
+
 export type TimelineEntry = {
   id: string;
   employer: string;
@@ -16,6 +24,7 @@ export type TimelineEntry = {
 export type Project = {
   title: string;
   description: string;
+  bullets?: string[];
   /**
    * Tags shown on the card and used for `/projects` filter chips.
    * Avoid commas inside tag strings (stored comma-separated in HTML).

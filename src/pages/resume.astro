@@ -1,0 +1,346 @@
+---
+import "../styles/global.css";
+import { links } from "../data/site";
+import { timeline, homepageSkills, projects, awardsCertificates } from "../data/portfolio";
+import { formatTenure } from "../utils/tenure";
+
+const featuredProjects = projects.filter((p) => p.featured);
+
+const monthMap: Record<string, string> = {
+  jan: "01", feb: "02", mar: "03", apr: "04", may: "05", jun: "06",
+  jul: "07", aug: "08", sep: "09", oct: "10", nov: "11", dec: "12",
+};
+
+function sortDate(a: string, b: string): number {
+  const toNum = (d: string) => {
+    const parts = d.split(" ");
+    if (parts.length === 2) {
+      const m = monthMap[parts[0].toLowerCase()] || "00";
+      return parseInt(parts[1] + m, 10);
+    }
+    return parseInt(d + "00", 10);
+  };
+  return toNum(b) - toNum(a);
+}
+
+const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.date));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Danial Aiman Jamil — Resume</title>
+    <meta name="description" content="Danial Aiman Jamil (DevDAJ) — Software Engineer resume" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      (function () {
+        const k = "theme";
+        const t = localStorage.getItem(k);
+        const dark =
+          t === "dark" ||
+          (t !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
+  </head>
+  <body class="m-0 bg-canvas text-foreground antialiased">
+    <div
+      class="mx-auto max-w-3xl px-4 py-12 sm:py-16 print:max-w-full print:px-0 print:py-0"
+    >
+      <article
+        class="rounded-xl border border-border bg-canvas-elevated p-6 shadow-sm sm:p-8 dark:shadow-none print:border-none print:bg-none print:p-0 print:shadow-none"
+      >
+        <header class="flex flex-col gap-3">
+          <div class="flex items-baseline gap-x-3">
+            <h1 class="text-3xl font-bold tracking-tight sm:text-4xl print:text-2xl">
+              Danial Aiman Jamil
+            </h1>
+            <p class="text-lg font-medium text-accent sm:text-xl print:text-base">
+              Software Engineer
+            </p>
+          </div>
+          <p class="text-sm text-foreground-muted print:text-[9pt] print:text-gray-600">
+            <a
+              href={`mailto:${links.email}`}
+              class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+            >{links.email}</a>
+            <span class="mx-2 text-foreground-muted/40 print:text-gray-400">|</span>
+            <a
+              href={`https://wa.me/${links.phone.replace(/\D/g, "")}`}
+              class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+            >{links.phone}</a>
+            <span class="mx-2 text-foreground-muted/40 print:text-gray-400">|</span>
+            Malaysia
+          </p>
+          <p
+            class="text-sm text-foreground-muted print:text-[9pt] print:text-gray-600"
+          >
+            <a
+              href={links.github}
+              class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+            >github.com/devdaj</a>
+            <span class="mx-2 text-foreground-muted/40 print:text-gray-400">|</span>
+            <a
+              href={links.linkedin}
+              class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+            >linkedin.com/in/danial-a-jamil/</a>
+            <span class="mx-2 text-foreground-muted/40 print:text-gray-400">|</span>
+            <a
+              href={links.twitter}
+              class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+            >{links.twitter.replace("https://", "")}</a>
+          </p>
+        </header>
+
+        <hr class="my-5 border-border print:my-4 print:border-gray-300" />
+
+        <section aria-labelledby="resume-skills-heading">
+          <h2
+            id="resume-skills-heading"
+            class="text-lg font-semibold tracking-tight text-accent print:text-sm print:tracking-wide"
+          >
+            Skills
+          </h2>
+          <p class="mt-3 text-sm text-foreground-muted print:mt-1 print:text-[9pt] print:text-gray-700">
+            {homepageSkills.map(({ label }, i) => (
+              <>{i > 0 && <span>, </span>}<span>{label}</span></>
+            ))}
+          </p>
+        </section>
+
+        <hr class="my-5 border-border print:my-4 print:border-gray-300" />
+
+        <section aria-labelledby="resume-experience-heading">
+          <h2
+            id="resume-experience-heading"
+            class="text-lg font-semibold tracking-tight text-accent print:text-sm print:tracking-wide"
+          >
+            Experience
+          </h2>
+          <div class="mt-4 space-y-6 print:mt-3 print:space-y-5">
+            {timeline.map((entry) => (
+              <div>
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <div class="flex flex-wrap items-baseline gap-x-2">
+                    <h3 class="text-base font-semibold">
+                      {entry.employer}
+                    </h3>
+                    <p class="text-sm font-medium text-foreground-muted print:text-[9.5pt] print:text-gray-700">
+                      {entry.subtitle}
+                      <span class="text-xs text-foreground-muted/70 print:text-[9pt] print:text-gray-500">
+                        ({formatTenure(entry.startLabel, entry.endLabel)})
+                      </span>
+                    </p>
+                  </div>
+                  <time
+                    class="whitespace-nowrap text-xs tabular-nums text-foreground-muted print:text-[9pt] print:text-gray-600"
+                  >
+                    {entry.startLabel} &ndash; {entry.endLabel}
+                  </time>
+                </div>
+                {entry.bullets && entry.bullets.length > 0 && (
+                  <ul
+                    class="mt-2 ml-4 list-outside list-disc text-sm text-foreground-muted print:mt-1.5 print:text-[9.5pt] print:text-gray-700 [&_strong]:font-semibold [&_strong]:text-foreground print:[&_strong]:text-black"
+                  >
+                    {entry.bullets.map((b) => (
+                      <li class="mt-2 print:mt-1" set:html={b} />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {featuredProjects.length > 0 && (
+          <>
+            <hr class="my-5 border-border print:my-4 print:border-gray-300" />
+
+            <section aria-labelledby="resume-projects-heading">
+              <h2
+                id="resume-projects-heading"
+                class="text-lg font-semibold tracking-tight text-accent print:text-sm print:tracking-wide"
+              >
+                Featured Projects
+              </h2>
+              <div class="mt-4 space-y-4 print:mt-3 print:space-y-3">
+                {featuredProjects.map((project) => (
+              <div class="print-break-avoid">
+                    <h3 class="text-sm font-semibold print:text-[10pt]">
+                      {project.title}
+                    </h3>
+                    {
+                      project.bullets && project.bullets.length > 0 ? (
+                        <ul class="mt-1 ml-4 list-outside list-disc text-xs text-foreground-muted print:text-[9pt] print:text-gray-700 [&_strong]:font-semibold [&_strong]:text-foreground print:[&_strong]:text-black">
+                          {project.bullets.map((b) => (
+                            <li class="mt-1 print:mt-0.5" set:html={b} />
+                          ))}
+                        </ul>
+                      ) : (
+                        <p class="mt-1 text-xs text-foreground-muted print:text-[9pt] print:text-gray-600">
+                          {project.description}
+                        </p>
+                      )
+                    }
+                    {project.technologies &&
+                      project.technologies.length > 0 && (
+                        <p class="mt-1 text-xs text-foreground-muted/70 print:text-[9pt] print:text-gray-500">
+                          {project.technologies.map((tech, i) => (
+                            <>{i > 0 && <span> &middot; </span>}<span>{tech}</span></>
+                          ))}
+                        </p>
+                      )}
+                    {(project.projectUrl || project.githubUrl) && (
+                      <p class="mt-1 text-xs text-foreground-muted/70 print:text-[9pt] print:text-gray-500">
+                        {project.projectUrl && (
+                          <a
+                            href={project.projectUrl}
+                            class="underline-offset-2 transition-colors duration-200 ease-out hover:text-mint hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+                          >{project.projectUrl}</a>
+                        )}
+                        {project.projectUrl && project.githubUrl && (
+                          <span> &middot; </span>
+                        )}
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            class="underline-offset-2 transition-colors duration-200 ease-out hover:text-mint hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+                          >{project.githubUrl}</a>
+                        )}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        <hr class="my-5 border-border print:my-4 print:border-gray-300" />
+
+        <section aria-labelledby="resume-awards-heading">
+          <h2
+            id="resume-awards-heading"
+            class="text-lg font-semibold tracking-tight text-accent print:text-sm print:tracking-wide"
+          >
+            Awards &amp; Certificates
+          </h2>
+          <div class="mt-4 space-y-3 print:mt-3 print:space-y-2">
+            {sortedAwards.map((item) => (
+              <div class="print-break-avoid flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <p class="text-sm font-medium">
+                  {item.url ? (
+                    <a
+                      href={item.url}
+                      class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
+                    >{item.title}</a>
+                  ) : (
+                    item.title
+                  )}
+                </p>
+                <p class="whitespace-nowrap text-xs tabular-nums text-foreground-muted print:text-[9pt] print:text-gray-600">
+                  {item.issuer} &middot; {item.date}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </article>
+
+      <div class="mt-6 flex justify-center gap-3 print:hidden">
+        <button
+          onclick="window.print()"
+          class="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-canvas px-5 py-2.5 text-sm font-medium text-foreground shadow-sm transition-all duration-200 ease-out hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-colors"
+        >
+          Save as PDF
+        </button>
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 rounded-lg border border-border bg-canvas px-5 py-2.5 text-sm font-medium text-foreground shadow-sm transition-all duration-200 ease-out hover:border-mint/40 hover:bg-canvas-elevated focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint motion-reduce:transition-colors"
+        >
+          Download PDF
+        </a>
+      </div>
+    </div>
+
+    <script>
+      const button = document.querySelector("[onclick=\"window.print()\"]");
+      if (button) {
+        button.addEventListener("click", () => window.print());
+      }
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @media print {
+    html {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+    }
+
+    body {
+      background: white !important;
+      color: black !important;
+      font-size: 10pt !important;
+      line-height: 1.25 !important;
+    }
+
+    a {
+      color: black !important;
+      text-decoration: none !important;
+    }
+
+    article {
+      max-width: 100% !important;
+    }
+
+    .print-break-avoid {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    section {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    hr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-top: 0.3rem !important;
+      margin-bottom: 0.3rem !important;
+    }
+
+    h2 {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    ul {
+      margin-top: 0.15rem !important;
+      margin-bottom: 0 !important;
+    }
+
+    li {
+      margin-top: 0.1rem !important;
+    }
+
+    @page {
+      margin: 0.4in;
+    }
+  }
+</style>

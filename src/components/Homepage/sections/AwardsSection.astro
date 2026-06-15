@@ -1,0 +1,76 @@
+---
+import { awardsCertificates } from "../../../data/portfolio";
+
+const monthMap: Record<string, string> = {
+  jan: "01", feb: "02", mar: "03", apr: "04", may: "05", jun: "06",
+  jul: "07", aug: "08", sep: "09", oct: "10", nov: "11", dec: "12",
+};
+
+function sortDate(a: string, b: string): number {
+  const toNum = (d: string) => {
+    const parts = d.split(" ");
+    if (parts.length === 2) {
+      const m = monthMap[parts[0].toLowerCase()] || "00";
+      return parseInt(parts[1] + m, 10);
+    }
+    return parseInt(d + "00", 10);
+  };
+  return toNum(b) - toNum(a);
+}
+
+const sorted = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.date));
+
+const sectionHeading =
+  "text-xl font-semibold tracking-tight text-foreground sm:text-2xl";
+---
+
+<section class="w-full" aria-labelledby="awards-heading">
+  <div
+    class="rounded-xl border border-border bg-canvas-elevated p-6 text-foreground shadow-sm dark:shadow-none"
+  >
+    <h2 id="awards-heading" class={sectionHeading}>
+      Awards &amp; Certificates
+    </h2>
+    <ul class="mt-4 flex list-none flex-col gap-3 p-0">
+      {
+        sorted.map((item) => (
+          <li class="min-w-0">
+            <div class="flex items-baseline justify-between gap-x-4 gap-y-1">
+              <div class="flex items-baseline gap-2">
+                {item.url ? (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-sm font-medium underline-offset-2 transition-colors duration-200 ease-out hover:text-mint hover:underline motion-reduce:transition-none"
+                  >
+                    {item.title}
+                    <svg
+                      class="inline-block size-3.5 align-baseline"
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </a>
+                ) : (
+                  <span class="text-sm font-medium">{item.title}</span>
+                )}
+              </div>
+              <span class="whitespace-nowrap text-xs tabular-nums text-foreground-muted">
+                {item.issuer} &middot; {item.date}
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
