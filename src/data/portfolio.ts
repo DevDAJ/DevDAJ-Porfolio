@@ -86,8 +86,7 @@ export const projects: Project[] = [
     description: "Privacy first gym performance and macro tracking app",
     bullets: [
       "Built a cross-platform <strong>React Native</strong> and <strong>Expo</strong> app for gym performance tracking and macro logging.",
-      "Designed a <strong>privacy-first</strong> architecture with a <strong>local-first sync engine</strong> and no external data sharing.",
-      "Implemented calorie and macro nutrient tracking with <strong>custom meal logging</strong> and daily goal management.",
+      "Designed a <strong>privacy-first</strong> <strong>local-first sync engine</strong> with custom meal logging and daily goals, and no external data sharing.",
     ],
     tags: ["SaaS", "Fitness", "Still in development"],
     technologies: ["React Native", "TypeScript", "Expo", "Tailwind CSS"],
@@ -104,10 +103,8 @@ export const projects: Project[] = [
     description:
       "Created a web infographic to learn and build GSAP animations and explore Web Components",
     bullets: [
-      "Built an interactive web infographic using <strong>Web Components</strong> with <strong>HTML</strong>, <strong>CSS</strong>, and <strong>TypeScript</strong>.",
-      "Brought it to life with <strong>GSAP</strong> scroll-triggered animations and <strong>Three.js</strong> for immersive visual scenes.",
-      "Explored custom element lifecycles, shadow DOM encapsulation, and reusable component design patterns.",
-      "Designed a visually engaging learning tool that explains color theory concepts through animated examples.",
+      "Built an interactive web infographic with <strong>Web Components</strong> (<strong>HTML</strong>, <strong>CSS</strong>, <strong>TypeScript</strong>), <strong>GSAP</strong> scroll-triggered animations, and <strong>Three.js</strong> scenes.",
+      "Explored custom element lifecycles, <strong>shadow DOM</strong> encapsulation, and reusable component patterns in a color theory learning tool.",
     ],
     tags: ["Frontend"],
     technologies: ["HTML", "CSS", "TypeScript", "Web Components", "Three.js", "GSAP"],
