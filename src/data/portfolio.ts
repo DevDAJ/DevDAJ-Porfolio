@@ -36,11 +36,6 @@ export const awardsCertificates: AwardCertificate[] = [
     issuer: "Multimedia University Malaysia",
     date: "November 2022",
   },
-  {
-    title: "Oddesey Hackfest",
-    issuer: "University Malaya",
-    date: "October 2022",
-  },
 ];
 
 export const timeline: TimelineEntry[] = [
