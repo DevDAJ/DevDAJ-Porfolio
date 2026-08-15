@@ -56,10 +56,11 @@ export const timeline: TimelineEntry[] = [
     startLabel: "August 2024",
     endLabel: "Present",
     bullets: [
-      "Designed, implemented, and released <strong>web</strong> and <strong>backend</strong> capabilities for internal tooling from APIs and integrations to dashboards teams rely on day to day, using <strong>Docker</strong> to manage the microservices behind them.",
-      "Part of a <strong>React Native</strong> codebase that targets <strong>web</strong>, <strong>mobile</strong>, and <strong>TVs</strong>, including native integrations and SDK work for <strong>DirecTV</strong> deployments.",
+      "Designed and shipped <strong>web</strong> and <strong>backend</strong> capabilities for internal tooling, from <strong>REST APIs</strong> with <strong>session</strong> and <strong>JWT</strong> authentication to dashboards teams rely on daily, using <strong>Docker</strong> to manage the microservices behind them.",
+      "Part of a <strong>React Native</strong> codebase targeting <strong>web</strong>, <strong>mobile</strong>, and <strong>TV</strong>, including native integrations and SDK work for <strong>DirecTV</strong>, while keeping products <strong>responsive</strong> and consistent across devices.",
       "Partnered across product and platform to unblock releases, tighten quality, and keep shared components consistent across surfaces.",
       "Ran structured <strong>onboarding</strong> for new hires so they could contribute quickly to <strong>large-scale, multi-platform</strong> shipping, architecture walkthroughs, coding standards, and release practices.",
+      "Collaborated with teams through <strong>Jira</strong> and <strong>Bitbucket</strong> for client projects, and <strong>GitHub</strong> for internal projects.",
     ],
   },
   {
@@ -77,7 +78,9 @@ export const timeline: TimelineEntry[] = [
       "Delivered accessible, production-grade <strong>React</strong> interfaces for banking workflows, partnering with stakeholders on requirements while keeping regressions rare through disciplined testing and <strong>~90% unit test</strong> coverage on critical paths.",
       "Owned <strong>VegaSpread 4.0</strong> end to end in <strong>React</strong> from translating <strong>design</strong> specs into reusable components through <strong>production</strong> launch with a focus on rendering and interacting with <strong>high-volume</strong> market data reliably.",
       "Expanded <strong>Playwright</strong> automation to cover critical user journeys, giving the team repeatable <strong>E2E</strong> signal and safer releases during iterative feature work.",
+      "Used <strong>MUI (Material UI)</strong> to build consistent, accessible component libraries across projects.",
       "Collaborated tightly on performance, UX polish, and shared UI patterns so new features shipped quickly without fragmenting the product experience.",
+      "Collaborated across teams using <strong>Asana</strong> and <strong>GitHub</strong> to track work and review code.",
     ],
   },
 ];
@@ -106,12 +109,13 @@ export const projects: Project[] = [
     description:
       "Created a web infographic to learn and build GSAP animations and explore Web Components",
     bullets: [
-      "Built an interactive web infographic using <strong>GSAP</strong> scroll-triggered animations and <strong>Web Components</strong>.",
+      "Built an interactive web infographic using <strong>Web Components</strong> with <strong>HTML</strong>, <strong>CSS</strong>, and <strong>TypeScript</strong>.",
+      "Brought it to life with <strong>GSAP</strong> scroll-triggered animations and <strong>Three.js</strong> for immersive visual scenes.",
       "Explored custom element lifecycles, shadow DOM encapsulation, and reusable component design patterns.",
       "Designed a visually engaging learning tool that explains color theory concepts through animated examples.",
     ],
     tags: ["Frontend"],
-    technologies: ["Web Components", "GSAP", "TypeScript"],
+    technologies: ["HTML", "CSS", "TypeScript", "Web Components", "Three.js", "GSAP"],
     featured: true,
     cardImage: {
       src: "/images/color.png",
