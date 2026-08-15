@@ -15,6 +15,7 @@ export const homepageSkills: HomepageSkill[] = [
   { label: "Astro", icon: "siAstro" },
   { label: "Tailwind CSS", icon: "siTailwindcss" },
   { label: "PostgreSQL", icon: "siPostgresql" },
+  { label: "Docker", icon: "siDocker" },
 ];
 
 export const awardsCertificates: AwardCertificate[] = [
@@ -55,7 +56,7 @@ export const timeline: TimelineEntry[] = [
     startLabel: "August 2024",
     endLabel: "Present",
     bullets: [
-      "Designed, implemented, and released <strong>web</strong> and <strong>backend</strong> capabilities for internal tooling from APIs and integrations to dashboards teams rely on day to day.",
+      "Designed, implemented, and released <strong>web</strong> and <strong>backend</strong> capabilities for internal tooling from APIs and integrations to dashboards teams rely on day to day, using <strong>Docker</strong> to manage the microservices behind them.",
       "Part of a <strong>React Native</strong> codebase that targets <strong>web</strong>, <strong>mobile</strong>, and <strong>TVs</strong>, including native integrations and SDK work for <strong>DirecTV</strong> deployments.",
       "Partnered across product and platform to unblock releases, tighten quality, and keep shared components consistent across surfaces.",
       "Ran structured <strong>onboarding</strong> for new hires so they could contribute quickly to <strong>large-scale, multi-platform</strong> shipping, architecture walkthroughs, coding standards, and release practices.",

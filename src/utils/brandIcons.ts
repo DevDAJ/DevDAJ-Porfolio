@@ -1,6 +1,7 @@
 import type { SimpleBrand } from "../types/icons";
 import {
   siAstro,
+  siDocker,
   siExpress,
   siGithub,
   siNextdotjs,
@@ -19,6 +20,7 @@ export const BRAND_ICONS: Record<SimpleBrand, (typeof siGithub)> = {
   siReact,
   siTypescript,
   siExpress,
+  siDocker,
   siAstro,
   siTailwindcss,
   siPostgresql,
