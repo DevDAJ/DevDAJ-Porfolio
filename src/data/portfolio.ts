@@ -72,10 +72,10 @@ export const timeline: TimelineEntry[] = [
     startLabel: "August 2024",
     endLabel: "Present",
     bullets: [
+      "Architected, Built and shipped <strong>internal tooling</strong> adopted daily by <strong>5 teams</strong>, developing authenticated <strong>REST APIs</strong> and dashboards across <strong>Dockerized Node.js</strong> services deployed on <strong>AWS</strong>, reducing redundancy in processes by <strong>30%</strong>.",
       "Scaled a <strong>React Native</strong> application across <strong>12 web, mobile, and TV platforms</strong> serving <strong>millions of users</strong>; standardized shared UI and state management with <strong>Redux</strong> and <strong>Zustand</strong> to maintain consistent behavior across device-specific implementations.",
       "Built and owned the internal <strong>DirecTV SDK</strong> for managing application ad flows and metric reporting used by 100+ engineers across 12 platforms",
       "Maintained quality with <strong>Jest</strong> and <strong>React Testing Library</strong> across the cross-platform codebase.",
-      "Built and shipped <strong>internal tooling</strong> adopted daily by <strong>5 teams</strong>, developing authenticated <strong>REST APIs</strong> and dashboards across <strong>Dockerized Node.js</strong> services deployed on <strong>AWS</strong>, reducing redundancy in processes by <strong>30%</strong>.",
       "Mentored <strong>6</strong> new engineers through <strong>architecture reviews</strong>, <strong>coding standards</strong>, and <strong>cross-platform</strong> release practices, accelerating their onboarding and enabling independent contributions to production systems.",
       "Unblocked releases and raised quality by partnering across product and platform to keep <strong>shared components</strong> consistent across surfaces.",
     ],
@@ -92,10 +92,10 @@ export const timeline: TimelineEntry[] = [
     startLabel: "February 2023",
     endLabel: "August 2024",
     bullets: [
+      "Owned <strong>VegaSpread 4.0</strong> end to end, from design specifications through production launch, building a <strong>React</strong> interface capable of rendering and interacting with <strong>5,000 financial documents</strong> ranging from <strong>20–500 pages</strong>.",
       "Strengthened reliability of critical <strong>React</strong> workflows by standardizing <strong>Redux Toolkit</strong> state management and <strong>React Query</strong> server-state caching while maintaining <strong>~90%</strong> unit-test coverage across business-critical paths.",
       "Expanded <strong>Playwright E2E</strong> coverage to <strong>10</strong> business-critical user flows, adding automated regression protection for core workflows and reducing reliance on manual release validation.",
       "Shipped features without fragmenting UX by driving <strong>performance</strong>, polish, and <strong>shared UI patterns</strong>.",
-      "Owned <strong>VegaSpread 4.0</strong> end to end, from design specifications through production launch, building a <strong>React</strong> interface capable of rendering and interacting with <strong>5,000 financial documents</strong> ranging from <strong>20–500 pages</strong>.",
       "Built consistent, accessible component libraries with <strong>MUI (Material UI)</strong> reused across projects.",
     ],
   },
