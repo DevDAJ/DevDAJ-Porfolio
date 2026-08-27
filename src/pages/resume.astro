@@ -2,8 +2,6 @@
 import "../styles/global.css";
 import { links } from "../data/site";
 import { timeline, homepageSkills, projects, awardsCertificates } from "../data/portfolio";
-import { formatTenure } from "../utils/tenure";
-
 const featuredProjects = projects.filter((p) => p.featured);
 
 const monthMap: Record<string, string> = {
@@ -67,7 +65,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
               Danial Aiman Jamil
             </h1>
             <p class="text-lg font-medium text-accent sm:text-xl print:text-base">
-              Software Engineer
+              Cross-Platform Software Engineer
             </p>
           </div>
           <p class="text-sm text-foreground-muted print:text-[9pt] print:text-gray-600">
@@ -82,10 +80,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
             >{links.phone}</a>
             <span class="mx-2 text-foreground-muted/40 print:text-gray-400">|</span>
             Malaysia
-          </p>
-          <p
-            class="text-sm text-foreground-muted print:text-[9pt] print:text-gray-600"
-          >
+            <span class="mx-2 text-foreground-muted/40 print:text-gray-400">|</span>
             <a
               href={links.github}
               class="underline-offset-2 transition-colors duration-200 ease-out hover:text-foreground hover:underline motion-reduce:transition-none print:text-black print:no-underline"
@@ -113,9 +108,17 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
             Skills
           </h2>
           <p class="mt-3 text-sm text-foreground-muted print:mt-1 print:text-[9pt] print:text-gray-700">
-            {homepageSkills.map(({ label }, i) => (
-              <>{i > 0 && <span>, </span>}<span>{label}</span></>
-            ))}
+            {(() => {
+              const groups = new Map<string, string[]>();
+              for (const { label, category } of homepageSkills) {
+                if (!groups.has(category)) groups.set(category, []);
+                groups.get(category)!.push(label);
+              }
+              const entries = [...groups.entries()];
+              return entries.map(([category, labels], gi) => (
+                <>{gi > 0 && <span>, </span>}<span class="font-medium text-foreground print:text-black">{category}: </span>                <span>{labels.join(" · ")}</span></>
+              ));
+            })()}
           </p>
         </section>
 
@@ -133,14 +136,11 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
               <div>
                 <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                   <div class="flex flex-wrap items-baseline gap-x-2">
-                    <h3 class="text-base font-semibold">
+                    <h3 class="text-sm font-semibold">
                       {entry.employer}
                     </h3>
-                    <p class="text-sm font-medium text-foreground-muted print:text-[9.5pt] print:text-gray-700">
+                    <p class="text-xs font-semibold text-foreground-muted print:text-[9.5pt] print:text-gray-700">
                       {entry.subtitle}
-                      <span class="text-xs text-foreground-muted/70 print:text-[9pt] print:text-gray-500">
-                        ({formatTenure(entry.startLabel, entry.endLabel)})
-                      </span>
                     </p>
                   </div>
                   <time
@@ -229,12 +229,12 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
 
         <hr class="my-5 border-border print:my-4 print:border-gray-300" />
 
-        <section aria-labelledby="resume-awards-heading">
+        <section aria-labelledby="resume-achievements-heading">
           <h2
-            id="resume-awards-heading"
+            id="resume-achievements-heading"
             class="text-lg font-semibold tracking-tight text-accent print:text-sm print:tracking-wide"
           >
-            Awards &amp; Certificates
+            Achievements &amp; Coursework
           </h2>
           <div class="mt-4 space-y-3 print:mt-3 print:space-y-2">
             {sortedAwards.map((item) => (

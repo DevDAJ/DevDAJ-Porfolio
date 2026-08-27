@@ -5,8 +5,10 @@ export type SimpleBrand =
   | "siExpress"
   | "siGithub"
   | "siNextdotjs"
+  | "siNodedotjs"
   | "siPostgresql"
   | "siReact"
+  | "siRedux"
   | "siTailwindcss"
   | "siTypescript"
   | "siX";
@@ -22,5 +24,7 @@ type IconSizing = {
 
 export type IconsProps =
   | ({ type: "brand"; brandName: SimpleBrand } & IconSizing)
+  | ({ type: "aws" } & IconSizing)
+  | ({ type: "playwright" } & IconSizing)
   | ({ type: "linkedin" } & IconSizing)
   | ({ type: "material"; materialIcon: string } & IconSizing);

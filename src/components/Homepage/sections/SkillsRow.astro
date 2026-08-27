@@ -13,7 +13,10 @@ import { homepageSkills } from "../../../data/portfolio";
             class="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-canvas-elevated shadow-sm transition-all duration-300 ease-out will-change-transform motion-reduce:transition-colors motion-reduce:duration-150 group-hover:-translate-y-1 group-hover:scale-105 group-hover:border-mint/45 group-hover:bg-canvas group-hover:shadow-md motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-100"
             aria-hidden="true"
           >
-            <Icons type="brand" brandName={icon} />
+            <Icons
+              type={icon === "aws" ? "aws" : icon === "playwright" ? "playwright" : "brand"}
+              {...(icon !== "aws" && icon !== "playwright" ? { brandName: icon } : {})}
+            />
           </div>
           <span class="max-w-22 text-[10px] font-medium leading-tight text-foreground-muted transition-colors duration-300 ease-out motion-reduce:transition-colors motion-reduce:duration-150 sm:text-xs md:text-sm group-hover:text-foreground">
             {label}
