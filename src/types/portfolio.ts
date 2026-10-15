@@ -8,6 +8,13 @@ export type AwardCertificate = {
   url?: string;
 };
 
+export type EducationEntry = {
+  institution: string;
+  degree: string;
+  startLabel: string;
+  endLabel: string;
+};
+
 export type TimelineEntry = {
   id: string;
   employer: string;

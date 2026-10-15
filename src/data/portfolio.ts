@@ -1,16 +1,28 @@
 import type { SimpleBrand } from "../types/icons";
 import type {
+  EducationEntry,
   Project,
   TimelineEntry,
   AwardCertificate,
 } from "../types/portfolio";
 
 export type {
+  EducationEntry,
   Project,
   TimelineEntry,
   TimelineLink,
   AwardCertificate,
 } from "../types/portfolio";
+
+/** Resume-only — rendered exclusively on `/resume`. */
+export const education: EducationEntry[] = [
+  {
+    institution: "Universiti Putra Malaysia",
+    degree: "Bachelor of Science in Statistics (Hons.)",
+    startLabel: "2019",
+    endLabel: "2023",
+  },
+];
 
 /** Homepage skills strip (`SimpleBrand` = simple-icons export name). */
 export type HomepageSkill = {
@@ -76,6 +88,8 @@ export const timeline: TimelineEntry[] = [
       "Scaled a <strong>React Native</strong> application across <strong>12 web, mobile, and TV platforms</strong> serving <strong>millions of users</strong>; standardized shared UI and state management with <strong>Redux</strong> and <strong>Zustand</strong> to maintain consistent behavior across device-specific implementations.",
       "Built and owned the internal <strong>DirecTV SDK</strong> for managing application ad flows and metric reporting used by 100+ engineers across 12 platforms",
       "Maintained quality with <strong>Jest</strong> and <strong>React Testing Library</strong> across the cross-platform codebase.",
+      "Drove <strong>AI-native development</strong> across the team by adopting <strong>Claude Code</strong> and <strong>Cursor</strong> for day-to-day work, using agentic workflows for scaffolding, refactoring, and code review to accelerate delivery while keeping human oversight on architecture and quality.",
+      "Built <strong>AI-generated dashboards</strong> for internal tooling at <strong>Kloudius</strong>, leveraging AI-assisted workflows to move from spec to production dashboards faster while keeping code review and quality standards intact.",
       "Mentored <strong>6</strong> new engineers through <strong>architecture reviews</strong>, <strong>coding standards</strong>, and <strong>cross-platform</strong> release practices, accelerating their onboarding and enabling independent contributions to production systems.",
       "Unblocked releases and raised quality by partnering across product and platform to keep <strong>shared components</strong> consistent across surfaces.",
     ],
@@ -108,9 +122,10 @@ export const projects: Project[] = [
     bullets: [
       "Shipped a cross-platform <strong>React Native</strong> and <strong>Expo</strong> app for gym performance tracking and macro logging.",
       "Engineered a <strong>local-first synchronization engine</strong> for <strong>React Native</strong> that reconciles data across devices using <strong>application-scoped tokens</strong>, enabling <strong>offline writes</strong> and reliable synchronization when connectivity is restored.",
+      "Crafted <strong>GSAP</strong> animations for onboarding, stat transitions, and empty states to keep motion fluid and performance-light.",
     ],
     tags: ["SaaS", "Fitness", "Still in development"],
-    technologies: ["React Native", "TypeScript", "Expo", "Tailwind CSS"],
+    technologies: ["React Native", "TypeScript", "Expo", "Tailwind CSS", "GSAP"],
     featured: true,
     cardImage: {
       src: "/images/fitnexx.png",
@@ -118,31 +133,6 @@ export const projects: Project[] = [
     },
     githubUrl: "https://github.com/DevDAJ/fitnexx",
     projectUrl: "https://fitnexxtracking.vercel.app/",
-  },
-  {
-    title: "Color Theroy Infographic - GSAP Animation",
-    description:
-      "Created a web infographic to learn and build GSAP animations and explore Web Components",
-    bullets: [
-      "Built an interactive web infographic with <strong>Web Components</strong> (<strong>HTML</strong>, <strong>CSS</strong>, <strong>TypeScript</strong>), <strong>GSAP</strong> scroll-triggered animations, and <strong>Three.js</strong> scenes.",
-      "Explored custom element lifecycles, <strong>shadow DOM</strong> encapsulation, and reusable component patterns in a color theory learning tool.",
-    ],
-    tags: ["Frontend"],
-    technologies: [
-      "HTML",
-      "CSS",
-      "TypeScript",
-      "Web Components",
-      "Three.js",
-      "GSAP",
-    ],
-    featured: true,
-    cardImage: {
-      src: "/images/color.png",
-      alt: "Color Theory Infographic",
-    },
-    projectUrl: "https://color-theory-interactive-infographic.netlify.app/",
-    githubUrl: "https://github.com/DevDAJ/Interactive-Infographic",
   },
   // Still in progess, not working on it for now
   // {

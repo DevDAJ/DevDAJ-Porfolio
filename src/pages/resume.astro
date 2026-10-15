@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { links } from "../data/site";
-import { timeline, homepageSkills, projects, awardsCertificates } from "../data/portfolio";
+import { timeline, homepageSkills, projects, awardsCertificates, education } from "../data/portfolio";
 const featuredProjects = projects.filter((p) => p.featured);
 
 const monthMap: Record<string, string> = {
@@ -162,6 +162,40 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
             ))}
           </div>
         </section>
+
+        {education.length > 0 && (
+          <>
+            <hr class="my-5 border-border print:my-4 print:border-gray-300" />
+
+            <section aria-labelledby="resume-education-heading">
+              <h2
+                id="resume-education-heading"
+                class="text-lg font-semibold tracking-tight text-accent print:text-sm print:tracking-wide"
+              >
+                Education
+              </h2>
+              <div class="mt-4 space-y-3 print:mt-3 print:space-y-2">
+                {education.map((entry) => (
+                  <div class="print-break-avoid flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <div class="flex flex-wrap items-baseline gap-x-2">
+                      <h3 class="text-sm font-semibold">
+                        {entry.institution}
+                      </h3>
+                      <p class="text-xs font-semibold text-foreground-muted print:text-[9.5pt] print:text-gray-700">
+                        {entry.degree}
+                      </p>
+                    </div>
+                    <time
+                      class="whitespace-nowrap text-xs tabular-nums text-foreground-muted print:text-[9pt] print:text-gray-600"
+                    >
+                      {entry.startLabel} &ndash; {entry.endLabel}
+                    </time>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
         {featuredProjects.length > 0 && (
           <>
