@@ -57,9 +57,9 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
       class="mx-auto max-w-3xl px-4 py-12 sm:py-16 print:max-w-full print:px-0 print:py-0"
     >
       <article
-        class="rounded-xl border border-border bg-canvas-elevated p-6 shadow-sm sm:p-8 dark:shadow-none print:border-none print:bg-none print:p-0 print:shadow-none"
+        class="space-y-5 rounded-xl border border-border bg-canvas-elevated p-6 shadow-sm sm:p-8 dark:shadow-none print:space-y-3 print:border-none print:bg-none print:p-0 print:shadow-none"
       >
-        <header class="flex flex-col gap-3">
+        <header class="flex flex-col gap-2">
           <div class="flex items-baseline gap-x-3">
             <h1 class="text-3xl font-bold tracking-tight sm:text-4xl print:text-2xl">
               Danial Aiman Jamil
@@ -93,8 +93,6 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
           </p>
         </header>
 
-        <hr class="my-5 border-border print:my-4 print:border-gray-300" />
-
         <section aria-labelledby="resume-skills-heading">
           <h2
             id="resume-skills-heading"
@@ -102,7 +100,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
           >
             Skills
           </h2>
-          <p class="mt-3 text-sm text-foreground-muted print:mt-1 print:text-[9pt] print:text-gray-700">
+          <p class="mt-2 text-sm text-foreground-muted print:mt-1 print:text-[9pt] print:text-gray-700">
             {(() => {
               const groups = new Map<string, string[]>();
               for (const { label, category } of homepageSkills) {
@@ -117,8 +115,6 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
           </p>
         </section>
 
-        <hr class="my-5 border-border print:my-4 print:border-gray-300" />
-
         <section aria-labelledby="resume-experience-heading">
           <h2
             id="resume-experience-heading"
@@ -126,7 +122,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
           >
             Experience
           </h2>
-          <div class="mt-4 space-y-6 print:mt-3 print:space-y-5">
+          <div class="mt-3 space-y-4 print:mt-2 print:space-y-3">
             {timeline.map((entry) => (
               <div>
                 <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -146,10 +142,10 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
                 </div>
                 {entry.bullets && entry.bullets.length > 0 && (
                   <ul
-                    class="mt-2 ml-4 list-outside list-disc text-sm text-foreground-muted print:mt-1.5 print:text-[9.5pt] print:text-gray-700 [&_strong]:font-semibold [&_strong]:text-foreground print:[&_strong]:text-black"
+                    class="mt-1.5 ml-4 list-outside list-disc text-sm text-foreground-muted print:mt-1 print:text-[9.5pt] print:text-gray-700 [&_strong]:font-semibold [&_strong]:text-foreground print:[&_strong]:text-black"
                   >
                     {entry.bullets.map((b) => (
-                      <li class="mt-2 print:mt-1" set:html={b} />
+                      <li class="mt-1.5 print:mt-0.5" set:html={b} />
                     ))}
                   </ul>
                 )}
@@ -160,8 +156,6 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
 
         {education.length > 0 && (
           <>
-            <hr class="my-5 border-border print:my-4 print:border-gray-300" />
-
             <section aria-labelledby="resume-education-heading">
               <h2
                 id="resume-education-heading"
@@ -169,7 +163,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
               >
                 Education
               </h2>
-              <div class="mt-4 space-y-3 print:mt-3 print:space-y-2">
+              <div class="mt-3 space-y-2 print:mt-2 print:space-y-1.5">
                 {education.map((entry) => (
                   <div class="print-break-avoid flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                     <div class="flex flex-wrap items-baseline gap-x-2">
@@ -194,8 +188,6 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
 
         {featuredProjects.length > 0 && (
           <>
-            <hr class="my-5 border-border print:my-4 print:border-gray-300" />
-
             <section aria-labelledby="resume-projects-heading">
               <h2
                 id="resume-projects-heading"
@@ -203,7 +195,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
               >
                 Featured Projects
               </h2>
-              <div class="mt-4 space-y-4 print:mt-3 print:space-y-3">
+              <div class="mt-3 space-y-3 print:mt-2 print:space-y-2">
                 {featuredProjects.map((project) => (
               <div class="print-break-avoid">
                     <h3 class="text-sm font-semibold print:text-[10pt]">
@@ -213,7 +205,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
                       project.bullets && project.bullets.length > 0 ? (
                         <ul class="mt-1 ml-4 list-outside list-disc text-xs text-foreground-muted print:text-[9pt] print:text-gray-700 [&_strong]:font-semibold [&_strong]:text-foreground print:[&_strong]:text-black">
                           {project.bullets.map((b) => (
-                            <li class="mt-1 print:mt-0.5" set:html={b} />
+                            <li class="mt-0.5" set:html={b} />
                           ))}
                         </ul>
                       ) : (
@@ -256,8 +248,6 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
           </>
         )}
 
-        <hr class="my-5 border-border print:my-4 print:border-gray-300" />
-
         <section aria-labelledby="resume-achievements-heading">
           <h2
             id="resume-achievements-heading"
@@ -265,7 +255,7 @@ const sortedAwards = [...awardsCertificates].sort((a, b) => sortDate(a.date, b.d
           >
             Achievements &amp; Coursework
           </h2>
-          <div class="mt-4 space-y-3 print:mt-3 print:space-y-2">
+          <div class="mt-3 space-y-2 print:mt-2 print:space-y-1.5">
             {sortedAwards.map((item) => (
               <div class="print-break-avoid flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                 <p class="text-sm font-medium">
